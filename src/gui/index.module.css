@@ -1,0 +1,16 @@
+.main {
+    position: fixed;
+    /*top: 0;*/
+    /*left: 0;*/
+    /*background: red;*/
+    z-index: 1000;
+    /*background: white;*/
+}
+
+.list_header {
+    /*background: white;*/
+}
+
+.list_item {
+    /*background: white;*/
+}

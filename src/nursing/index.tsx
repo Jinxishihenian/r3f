@@ -1,18 +1,33 @@
-import {useRef} from 'react'
+import {useEffect, useRef} from 'react'
 import {Canvas} from "@react-three/fiber";
 import {AxesHelper} from 'three';
 import {CameraControls, Environment, useGLTF} from '@react-three/drei';
-import './index.css';
+import styles from './index.module.css';
 import GLBModel from "../loader";
 import {INVALID, INFUSION_PUMPS} from "../const/animation.ts";
+import Gui from "../gui";
+import {ActionMap, BehaviorMap} from "../action/const.ts";
+import {eventQueue, eventManager} from "../action/aueue.ts";
+import startStep from "../action";
+
+let lock = false;
 
 function Nursing() {
+    useEffect(() => {
+        if (!lock) {
+            // console.log('初始化');
+            // eventQueue.initialize(BehaviorMap[5]["5-1"]);
+            // eventQueue.start();
+            startStep(0);
+            lock = true;
+        }
+    }, []);
     const cameraControlRef = useRef<CameraControls | null>(null);
-
 
     // 病房场景搭建.
     return (
-        <div className={'main'}>
+        <div className={styles.main}>
+            <Gui/>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
                 <color attach="background" args={["#008000"]}/>
@@ -28,15 +43,12 @@ function Nursing() {
                 <GLBModel url="/HL_SM_YiDongShiShuYeJia.glb" position={[-6, 0, 0]}/>
                 {/*治疗车*/}
                 <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
-                {/*输液泵*/}
+                {/*输液泵静态*/}
                 <GLBModel
                     url="/HL_ShuYeBeng.glb"
                     position={[1, 0.7315777257693641, 0.8779830113159199]}
                     rotation={[0, Math.PI, 0]}
-                    click={(e) => {
-                        // console.log(e);
-                        console.log(e.object);
-                    }}
+
                 />
                 {/*棉签*/}
                 <GLBModel
@@ -48,6 +60,18 @@ function Nursing() {
                 <GLBModel
                     url="/HL_JiErDianXiaoDuYe.glb"
                     position={[1.3, 0.64, 0.8779830113159199]}
+                    click={(e) => {
+                        // console.log(e);
+                        console.log(e.object.name);
+                        console.log('模拟执行');
+                        // eventManager.emit(ActionMap.AN_QR7);
+                        // eventManager.emit(ActionMap.AN_DH);
+                        // 阻止冒泡.
+                        eventManager.emit("confirmAction", "confirmAction");
+                        // eventManager.emit("ObjectB");
+                        // eventManager.emit("confirmAction");
+                        e.stopPropagation();
+                    }}
                     // position={[-6, 0, 0]}
                 />
                 {/*男性病人*/}
@@ -57,6 +81,18 @@ function Nursing() {
                     rotation={[0, Math.PI, 0]}
                     animationName={INVALID.ACTION}
                     // position={[-6, 0, 0]}
+                    click={(e) => {
+                        // console.log(e);
+                        console.log(e.object.name);
+                        console.log('模拟执行');
+                        // eventManager.emit(ActionMap.AN_QR7);
+                        // eventManager.emit(ActionMap.AN_DH);
+                        // 阻止冒泡.
+                        eventManager.emit("clickObjectB", "clickObjectB");
+                        // eventManager.emit("ObjectB");
+                        // eventManager.emit("confirmAction");
+                        e.stopPropagation();
+                    }}
                 />
                 {/*输液泵动画*/}
                 <GLBModel
@@ -69,9 +105,16 @@ function Nursing() {
                     click={(e) => {
                         // console.log(e);
                         console.log(e.object.name);
+                        console.log('模拟执行');
+                        // eventManager.emit(ActionMap.AN_QR7);
+                        // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
+                        eventManager.emit("clickObjectA", "clickObjectA");
+                        // eventManager.emit("ObjectB");
+                        // eventManager.emit("confirmAction");
                         e.stopPropagation();
                     }}
+
                     // position={[-6, 0, 0]}
                 />
                 {/*HDR */}

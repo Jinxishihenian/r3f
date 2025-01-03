@@ -18,15 +18,11 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
     // 使用动画.
     const {actions, mixer} = useAnimations(animations, scene);
     const group = useRef();
-    const [selected, setSelected] = useState(null);
+
     const handleClick = (event) => {
         const clickedObject = event.object;
         console.log('Clicked on:', clickedObject.name);
         click && click(event);
-        // 设置被选中的对象
-        console.log('高亮内容:')
-        console.log(clickedObject)
-        setSelected(clickedObject);
     };
     useEffect(() => {
         // 是否可播放.
@@ -49,22 +45,18 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
 
     }, []);
     return (
-        <group ref={group as any} {...props} onClick={click && handleClick}>
+        <group
+            ref={group as any}
+            {...props}
+            // onClick={(event) => {
+            //     click && handleClick(event);
+            // }}
+            onClick={click}
+        >
             <primitive object={scene}/>
-            <EffectComposer>
-                {selected && <Outline
-                    // visibleEdgeColor={'#DC143C'}
-                  selection={[selected]}
-                  edgeStrength={10} // 边缘强度
-                  pulseSpeed={0} // 边缘闪烁速度
-                  visibleEdgeColor={"#DC143C"} // 可见边缘颜色
-                  hiddenEdgeColor={"#DC143C"} // 隐藏边缘颜色
-                />}
-            </EffectComposer>
         </group>
     );
     // return ;
 }
 
 export default GLBModel;
-
