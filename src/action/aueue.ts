@@ -6,11 +6,18 @@ class EventQueue {
     queue: any[];
     currentIndex: number;
     isProcessing: boolean;
+    onCompleteCallback: any;
 
     constructor() {
         this.queue = []; // 事件队列
         this.currentIndex = 0; // 当前处理的事件索引
         this.isProcessing = false; // 是否正在处理队列
+        this.onCompleteCallback = null;
+    }
+
+// 设置所有事件完成时的回调
+    onComplete(callback) {
+        this.onCompleteCallback = callback;
     }
 
     // 初始化队列（传入行为需要的事件列表）
@@ -42,6 +49,10 @@ class EventQueue {
     // 当事件完成时的回调
     handleEventComplete(event) {
         console.log(`事件完成：${event}`);
+        // 如果设置了回调，调用它
+        if (this.onCompleteCallback) {
+            this.onCompleteCallback(`${event}`);
+        }
         eventManager.off(event, this.handleEventComplete.bind(this)); // 移除监听
         this.currentIndex++; // 处理下一个事件
         this.processNext();
@@ -59,4 +70,5 @@ class EventQueue {
 
 // 创建事件队列实例
 const eventQueue = new EventQueue();
+// eventManager.on
 export {eventQueue, eventManager};

@@ -9,6 +9,7 @@ import Gui from "../gui";
 import {ActionMap, BehaviorMap} from "../action/const.ts";
 import {eventQueue, eventManager} from "../action/aueue.ts";
 import startStep from "../action";
+import {SomeMachineContext} from "../steps";
 
 let lock = false;
 
@@ -27,7 +28,9 @@ function Nursing() {
     // 病房场景搭建.
     return (
         <div className={styles.main}>
-            <Gui/>
+            <SomeMachineContext.Provider>
+                <Gui/>
+            </SomeMachineContext.Provider>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
                 <color attach="background" args={["#008000"]}/>
