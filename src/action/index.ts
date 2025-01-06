@@ -33,18 +33,18 @@ function startBehavior(behaviorIndex) {
     // 初始化事件队列
     eventQueue.initialize(behavior.events);
     // 所有的事件产生的视觉效果将会在这里完成.
-    eventQueue.onComplete((event) => {
-        console.log(`丑陋的把戏:${event}`);
-        if (event == 'clickObjectA') {
-            console.log('表现clickObjectA')
-        }
-        if (event == 'clickObjectB') {
-            console.log('表现clickObjectB')
-        }
-        if (event == 'confirmAction') {
-            console.log('表现confirmAction')
-        }
-    });
+    // eventQueue.onComplete((event) => {
+    //     console.log(`丑陋的把戏:${event}`);
+    //     if (event == 'clickObjectA') {
+    //         console.log('表现clickObjectA')
+    //     }
+    //     if (event == 'clickObjectB') {
+    //         console.log('表现clickObjectB')
+    //     }
+    //     if (event == 'confirmAction') {
+    //         console.log('表现confirmAction')
+    //     }
+    // });
 
     // 启动事件队列
     eventQueue.start();
@@ -54,6 +54,7 @@ function startBehavior(behaviorIndex) {
         console.log('processNext1');
         if (eventQueue.currentIndex >= eventQueue.queue.length) {
             console.log(`行为完成：${behavior.id}`);
+
             if (behaviorIndex + 1 < step.behaviors.length) {
                 startBehavior(behaviorIndex + 1);
             } else {

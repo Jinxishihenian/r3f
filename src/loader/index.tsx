@@ -25,6 +25,8 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
         click && click(event);
     };
     useEffect(() => {
+        console.log('==animations==');
+        console.log(animations)
         // 是否可播放.
         if (!(animations && actions[animationName])) {
             return;

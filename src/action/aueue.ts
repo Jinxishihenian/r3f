@@ -49,12 +49,13 @@ class EventQueue {
     // 当事件完成时的回调
     handleEventComplete(event) {
         console.log(`事件完成：${event}`);
+
+        eventManager.off(event, this.handleEventComplete.bind(this)); // 移除监听
+        this.currentIndex++; // 处理下一个事件
         // 如果设置了回调，调用它
         if (this.onCompleteCallback) {
             this.onCompleteCallback(`${event}`);
         }
-        eventManager.off(event, this.handleEventComplete.bind(this)); // 移除监听
-        this.currentIndex++; // 处理下一个事件
         this.processNext();
     }
 

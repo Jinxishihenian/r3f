@@ -11,15 +11,34 @@ import {eventQueue, eventManager} from "../action/aueue.ts";
 import startStep from "../action";
 import {SomeMachineContext} from "../steps";
 
+
 let lock = false;
 
 function Nursing() {
+    const someActorRef = SomeMachineContext.useActorRef();
     useEffect(() => {
         if (!lock) {
             // console.log('初始化');
             // eventQueue.initialize(BehaviorMap[5]["5-1"]);
             // eventQueue.start();
             startStep(0);
+            eventQueue.onComplete((event) => {
+                console.log(`丑陋的把戏:${event}`);
+                if (event == 'clickObjectA') {
+                    console.log('表现clickObjectA')
+                }
+                if (event == 'clickObjectB') {
+                    console.log('表现clickObjectB')
+                }
+                if (event == 'confirmAction') {
+                    console.log('表现confirmAction')
+                }
+                // eventQueue.currentIndex >= eventQueue.queue.length
+                if (eventQueue.currentIndex >= eventQueue.queue.length) {
+                    console.log('步骤完成~~~');
+                    someActorRef.send({type: 'COMPLETE'});
+                }
+            });
             lock = true;
         }
     }, []);
@@ -28,9 +47,7 @@ function Nursing() {
     // 病房场景搭建.
     return (
         <div className={styles.main}>
-            <SomeMachineContext.Provider>
-                <Gui/>
-            </SomeMachineContext.Provider>
+            <Gui/>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
                 <color attach="background" args={["#008000"]}/>
@@ -51,7 +68,6 @@ function Nursing() {
                     url="/HL_ShuYeBeng.glb"
                     position={[1, 0.7315777257693641, 0.8779830113159199]}
                     rotation={[0, Math.PI, 0]}
-
                 />
                 {/*棉签*/}
                 <GLBModel
@@ -91,9 +107,10 @@ function Nursing() {
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
+
+                        eventManager.emit("confirmAction");
                         eventManager.emit("clickObjectB", "clickObjectB");
-                        // eventManager.emit("ObjectB");
-                        // eventManager.emit("confirmAction");
+                        eventManager.emit("clickObjectA", "clickObjectA");
                         e.stopPropagation();
                     }}
                 />
@@ -112,6 +129,9 @@ function Nursing() {
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
+                        // eventManager.emit("confirmAction", "confirmAction");
+                        // eventManager.emit("clickObjectC", "clickObjectC");
+                        // eventManager.emit("clickObjectB", "clickObjectB");
                         eventManager.emit("clickObjectA", "clickObjectA");
                         // eventManager.emit("ObjectB");
                         // eventManager.emit("confirmAction");
