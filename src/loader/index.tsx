@@ -25,8 +25,9 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
         click && click(event);
     };
     useEffect(() => {
-        console.log('==animations==');
-        console.log(animations)
+        // console.log('==actions==');
+        // console.log(actions)
+        // callback(actions);
         // 是否可播放.
         if (!(animations && actions[animationName])) {
             return;
@@ -41,6 +42,26 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
             //     action?.stop();
             // });
             action?.play();
+            // if (animations.length == 31) {
+            //     console.log("输液泵动画");
+            //     mixer.addEventListener("finished", (e) => {
+            //         // if (e.action === actionA) {
+            //         //     // 播放 B 动画
+            //         //     actionB.reset().play();
+            //         // }
+            //         console.log('播放完成');
+            //         // const randomElement = animations[Math.floor(Math.random() * animations.length)];
+            //         const keys = Object.keys(actions);
+            //         const randomKeys = keys[Math.floor(Math.random() * keys.length)];
+            //         const randomElement = actions[randomKeys];
+            //         // const randomElement1 =actions[Math.floor(Math.random() * actions.length)];
+            //         console.log('==对比==')
+            //         console.log(randomElement)
+            //         console.log(actions['2.3安装输液管路'])
+            //         // actions['2.3安装输液管路']?.reset().play();
+            //         actions['2.3安装输液管路']?.reset().play();
+            //     });
+            // }
         } else {
             action?.play();
         }

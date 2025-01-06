@@ -10,6 +10,28 @@ const steps = [
                 id: "behavior1",
                 events: ["clickObjectA", "clickObjectB", "confirmAction"],
             },
+            {
+                id: "behavior2",
+                events: ["clickObjectA-1"],
+            },
+        ],
+    },
+    {
+        id: "step2",
+        behaviors: [
+            {
+                id: "behavior1",
+                events: ["clickObjectA-2"],
+            },
+        ],
+    },
+    {
+        id: "step3",
+        behaviors: [
+            {
+                id: "behavior3",
+                events: ["clickObjectA-3"],
+            },
         ],
     },
 ];
@@ -17,13 +39,15 @@ const steps = [
 function startStep(stepIndex) {
     currentStepIndex = stepIndex;
     const step = steps[stepIndex];
-
-    console.log(`开始步骤：${step.id}`);
+    // console.log(`开始步骤：${step.id}`);
     startBehavior(0); // 从第一个行为开始
 }
 
 function startBehavior(behaviorIndex) {
     const step = steps[currentStepIndex];
+    console.log('=行为列表=');
+    console.log(behaviorIndex);
+    console.log(currentStepIndex);
     const behavior = step.behaviors[behaviorIndex];
 
     currentBehaviorIndex = behaviorIndex;
@@ -52,19 +76,32 @@ function startBehavior(behaviorIndex) {
     // 队列完成时更新行为状态
     eventQueue.processNext = function () {
         console.log('processNext1');
-        if (eventQueue.currentIndex >= eventQueue.queue.length) {
-            console.log(`行为完成：${behavior.id}`);
+        console.log(eventManager.eventNames())
 
+        if (eventQueue.currentIndex >= eventQueue.queue.length) {
+            // console.log(`行为完成：${behavior.id}===========`);
             if (behaviorIndex + 1 < step.behaviors.length) {
+                console.log(`行为完成===${behaviorIndex}`);
                 startBehavior(behaviorIndex + 1);
             } else {
-                console.log(`步骤完成：${step.id}`);
+                // 一个步骤.
+                // 步骤完成.
+                console.log(`步骤完成：${step.id}===`);
+                console.log('currentStepIndex')
+                console.log(currentStepIndex)
+                console.log(currentStepIndex + 1)
+                currentStepIndex = currentStepIndex + 1;
+                startBehavior(0);
+                // startStep(currentStepIndex + 1);
             }
+            // startBehavior(behaviorIndex + 1);
         } else {
             const currentEvent = eventQueue.queue[eventQueue.currentIndex];
             console.log(`开始处理事件：${currentEvent}`);
             eventManager.on(currentEvent, eventQueue.handleEventComplete.bind(eventQueue));
         }
+        console.log('==注册的事件==');
+        console.log(eventManager.eventNames())
     };
 }
 

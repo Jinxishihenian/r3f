@@ -1,5 +1,5 @@
 import styles from './index.module.css';
-import {List, Typography} from 'antd';
+import {Button, List, Typography} from 'antd';
 import {SomeMachineContext, StepsStatus} from "../steps";
 import {useEffect, useState} from "react";
 
@@ -46,6 +46,12 @@ function Gui() {
                     </List.Item>
                 )}
             />
+            <Button
+                type="primary"
+                onClick={() => {}}
+            >
+                模拟各种按钮
+            </Button>
         </div>
     );
 }

@@ -29,9 +29,8 @@ class EventQueue {
 
     // 处理队列中的下一个事件
     processNext(): any {
-        console.log('processNext2');
+
         if (this.currentIndex >= this.queue.length) {
-            console.log("所有事件已处理完成");
             this.isProcessing = false;
             return true; // 队列完成
         }
@@ -41,6 +40,8 @@ class EventQueue {
         this.isProcessing = true;
         // 监听当前事件的完成
         eventManager.on(currentEvent, this.handleEventComplete.bind(this));
+        console.log('==注册的事件==');
+        console.log(eventManager.eventNames())
         // eventManager.on(currentEvent, () => {
         //     console.log('总有一天你会出现在我身边.')
         // });
@@ -48,9 +49,9 @@ class EventQueue {
 
     // 当事件完成时的回调
     handleEventComplete(event) {
-        console.log(`事件完成：${event}`);
-
-        eventManager.off(event, this.handleEventComplete.bind(this)); // 移除监听
+        console.log(`事件完成(移除)：${event}`);
+        // eventManager.removeListener(event, this.handleEventComplete.bind(this)); // 移除监听
+        eventManager.removeListener(event); // 移除监听
         this.currentIndex++; // 处理下一个事件
         // 如果设置了回调，调用它
         if (this.onCompleteCallback) {
@@ -65,6 +66,7 @@ class EventQueue {
             console.log("事件队列为空");
             return;
         }
+        console.log('start')
         this.processNext();
     }
 }

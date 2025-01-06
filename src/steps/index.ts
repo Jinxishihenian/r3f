@@ -314,4 +314,4 @@ function incrementLastNumberInString(str) {
     return result;
 }
 
-export {StepsStatus, BehaviorStatus, SomeMachineContext};
+export {StepsStatus, BehaviorStatus, SomeMachineContext, step};

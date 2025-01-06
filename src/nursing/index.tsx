@@ -10,6 +10,7 @@ import {ActionMap, BehaviorMap} from "../action/const.ts";
 import {eventQueue, eventManager} from "../action/aueue.ts";
 import startStep from "../action";
 import {SomeMachineContext} from "../steps";
+import {play} from "../movie";
 
 
 let lock = false;
@@ -23,21 +24,24 @@ function Nursing() {
             // eventQueue.start();
             startStep(0);
             eventQueue.onComplete((event) => {
+                // console.log('丑陋的把戏')
                 console.log(`丑陋的把戏:${event}`);
-                if (event == 'clickObjectA') {
-                    console.log('表现clickObjectA')
-                }
-                if (event == 'clickObjectB') {
-                    console.log('表现clickObjectB')
-                }
-                if (event == 'confirmAction') {
-                    console.log('表现confirmAction')
-                }
-                // eventQueue.currentIndex >= eventQueue.queue.length
-                if (eventQueue.currentIndex >= eventQueue.queue.length) {
-                    console.log('步骤完成~~~');
-                    someActorRef.send({type: 'COMPLETE'});
-                }
+                // 播放层.
+                console.log(play[event]);
+                // if (event == 'clickObjectA') {
+                //     console.log('表现clickObjectA')
+                // }
+                // if (event == 'clickObjectB') {
+                //     console.log('表现clickObjectB')
+                // }
+                // if (event == 'confirmAction') {
+                //     console.log('表现confirmAction')
+                // }
+                // // eventQueue.currentIndex >= eventQueue.queue.length
+                // if (eventQueue.currentIndex >= eventQueue.queue.length) {
+                //     console.log('步骤完成~~~');
+                //     someActorRef.send({type: 'COMPLETE'});
+                // }
             });
             lock = true;
         }
@@ -74,6 +78,17 @@ function Nursing() {
                     url="/HL_YiYongMianQianBaoZhuang.glb"
                     position={[1.2, 0.62, 0.8779830113159199]}
                     // position={[-6, 0, 0]}
+                    click={() => {
+                        eventManager.emit("clickObjectA-2", "clickObjectA-2");
+                    }}
+                />
+                <GLBModel
+                    url="/HL_SM_HuShiBiao.glb"
+                    position={[1.2, 0.62, 0.7]}
+                    click={() => {
+                        eventManager.emit("clickObjectA-1", "clickObjectA-1");
+                    }}
+                    // position={[-6, 0, 0]}
                 />
                 {/*吉尔碘*/}
                 <GLBModel
@@ -81,8 +96,8 @@ function Nursing() {
                     position={[1.3, 0.64, 0.8779830113159199]}
                     click={(e) => {
                         // console.log(e);
-                        console.log(e.object.name);
-                        console.log('模拟执行');
+                        // console.log(e.object.name);
+                        // console.log('模拟执行');
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
@@ -102,15 +117,15 @@ function Nursing() {
                     // position={[-6, 0, 0]}
                     click={(e) => {
                         // console.log(e);
-                        console.log(e.object.name);
-                        console.log('模拟执行');
+                        // console.log(e.object.name);
+                        // console.log('模拟执行');
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
 
-                        eventManager.emit("confirmAction");
+                        // eventManager.emit("confirmAction");
                         eventManager.emit("clickObjectB", "clickObjectB");
-                        eventManager.emit("clickObjectA", "clickObjectA");
+                        // eventManager.emit("clickObjectA", "clickObjectA");
                         e.stopPropagation();
                     }}
                 />
@@ -120,19 +135,23 @@ function Nursing() {
                     // position: [6.506, 1.006, 0.968],
                     position={[-6, 0, 0]}
                     // rotation={[0, Math.PI, 0]}
-                    animationName={INFUSION_PUMPS.CONNECT}
+                    // animationName={INFUSION_PUMPS.CONNECT}
+                    animationName={"1.5少量液体滴入弯盘内"}
                     playOnce={true}
                     click={(e) => {
                         // console.log(e);
-                        console.log(e.object.name);
-                        console.log('模拟执行');
+                        // console.log(e.object.name);
+                        // console.log('模拟执行');
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
                         // 阻止冒泡.
                         // eventManager.emit("confirmAction", "confirmAction");
                         // eventManager.emit("clickObjectC", "clickObjectC");
                         // eventManager.emit("clickObjectB", "clickObjectB");
+                        // eventManager.emit("confirmAction", "confirmAction");
+                        // eventManager.emit("clickObjectB", "clickObjectB");
                         eventManager.emit("clickObjectA", "clickObjectA");
+                        // eventQueue.processNext();
                         // eventManager.emit("ObjectB");
                         // eventManager.emit("confirmAction");
                         e.stopPropagation();
