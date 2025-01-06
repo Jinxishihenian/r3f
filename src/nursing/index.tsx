@@ -8,9 +8,10 @@ import {INVALID, INFUSION_PUMPS} from "../const/animation.ts";
 import Gui from "../gui";
 import {ActionMap, BehaviorMap} from "../action/const.ts";
 import {eventQueue, eventManager} from "../action/aueue.ts";
-import startStep from "../action";
+import {startStep, steps} from "../action";
 import {SomeMachineContext} from "../steps";
 import {play} from "../movie";
+import {Modal} from "antd";
 
 
 let lock = false;
@@ -24,10 +25,18 @@ function Nursing() {
             // eventQueue.start();
             startStep(0);
             eventQueue.onComplete((event) => {
-                // console.log('丑陋的把戏')
-                console.log(`丑陋的把戏:${event}`);
-                // 播放层.
-                console.log(play[event]);
+                console.log(event);
+                console.log(`小丑的把戏:${event}`);
+                Modal.confirm({
+                    content: <div>播放:   {event}   对应影视</div>,
+                    onOk: () => {
+                    },
+                    onCancel: () => {
+                    }
+                });
+                // TODO影视层.
+                // console.log(play[event]);
+
                 // if (event == 'clickObjectA') {
                 //     console.log('表现clickObjectA')
                 // }
@@ -38,10 +47,10 @@ function Nursing() {
                 //     console.log('表现confirmAction')
                 // }
                 // // eventQueue.currentIndex >= eventQueue.queue.length
-                // if (eventQueue.currentIndex >= eventQueue.queue.length) {
-                //     console.log('步骤完成~~~');
-                //     someActorRef.send({type: 'COMPLETE'});
-                // }
+                if (eventQueue.currentIndex >= eventQueue.queue.length) {
+                    console.log('当前步骤完成~~~');
+                    someActorRef.send({type: 'COMPLETE'});
+                }
             });
             lock = true;
         }

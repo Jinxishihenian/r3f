@@ -9,6 +9,7 @@ const movie: Movie = {
     parameters: {},
 }
 
+// 影视类型.
 enum MovieType {
     // 位移(跳步部分).
     MOVE,
@@ -37,6 +38,7 @@ enum MovieType {
 }
 
 // 根据对应动作播放对应动画.
+// 暂未启用(负责历史记录).
 const play = {
     [ActionMap.SYB_SQ]: [
         {

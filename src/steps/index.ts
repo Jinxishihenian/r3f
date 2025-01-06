@@ -53,6 +53,7 @@ const step: any = {
             // 行为.
             "1-1": {
                 behaviorStatus: BehaviorStatus.Running,
+                // 动作
                 events: [ActionMap.SYB_SQ, ActionMap.SYB_FZ1],
             }
         },
@@ -77,8 +78,7 @@ const step: any = {
             },
             stepsStatus:
             StepsStatus.UnStart,
-        }
-    ,
+        },
     "4": {
         children: {
             "4-1": {
@@ -92,8 +92,7 @@ const step: any = {
         },
         stepsStatus:
         StepsStatus.UnStart,
-    }
-    ,
+    },
     "5":
         {
             children: {
@@ -115,8 +114,7 @@ const step: any = {
             },
             stepsStatus:
             StepsStatus.UnStart,
-        }
-    ,
+        },
     "6":
         {
             children: {
@@ -140,8 +138,7 @@ const step: any = {
             },
             stepsStatus:
             StepsStatus.UnStart,
-        }
-    ,
+        },
     "7": {
         children: {
             "7-1": {
@@ -160,8 +157,7 @@ const step: any = {
         },
         stepsStatus:
         StepsStatus.UnStart,
-    }
-    ,
+    },
     "8":
         {
             children: {

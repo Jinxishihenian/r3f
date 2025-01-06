@@ -1,40 +1,64 @@
 import {eventManager, eventQueue} from "./aueue.ts";
+import {step} from "../steps";
 
 let currentStepIndex = 0;
 let currentBehaviorIndex = 0;
-const steps = [
-    {
-        id: "step1",
-        behaviors: [
-            {
-                id: "behavior1",
-                events: ["clickObjectA", "clickObjectB", "confirmAction"],
-            },
-            {
-                id: "behavior2",
-                events: ["clickObjectA-1"],
-            },
-        ],
-    },
-    {
-        id: "step2",
-        behaviors: [
-            {
-                id: "behavior1",
-                events: ["clickObjectA-2"],
-            },
-        ],
-    },
-    {
-        id: "step3",
-        behaviors: [
-            {
-                id: "behavior3",
-                events: ["clickObjectA-3"],
-            },
-        ],
-    },
-];
+// const steps = [
+//     {
+//         id: "step1",
+//         behaviors: [
+//             {
+//                 id: "behavior1",
+//                 events: ["clickObjectA", "clickObjectB", "confirmAction"],
+//             },
+//             {
+//                 id: "behavior2",
+//                 events: ["clickObjectA-1"],
+//             },
+//         ],
+//     },
+//     {
+//         id: "step2",
+//         behaviors: [
+//             {
+//                 id: "behavior1",
+//                 events: ["clickObjectA-2"],
+//             },
+//         ],
+//     },
+//     {
+//         id: "step3",
+//         behaviors: [
+//             {
+//                 id: "behavior3",
+//                 events: ["clickObjectA-3"],
+//             },
+//         ],
+//     },
+// ];
+// step
+// const step = step
+let steps = [];
+let index = 0;
+Object.values(step).forEach(value => {
+    let j = 0;
+    // console.log('重置j')
+    steps.push({
+        id: index,
+        behaviors: [],
+    });
+
+    Object.values(value.children).forEach(value1 => {
+        steps[index]['behaviors'][j] = {
+            id: j,
+            events: value1.events,
+        };
+        j++;
+    });
+    index++;
+})
+// console.log('映射结果');
+// console.log(steps);
 
 function startStep(stepIndex) {
     currentStepIndex = stepIndex;
@@ -45,15 +69,9 @@ function startStep(stepIndex) {
 
 function startBehavior(behaviorIndex) {
     const step = steps[currentStepIndex];
-    console.log('=行为列表=');
-    console.log(behaviorIndex);
-    console.log(currentStepIndex);
     const behavior = step.behaviors[behaviorIndex];
-
     currentBehaviorIndex = behaviorIndex;
-
-    console.log(`开始行为：${behavior.id}`);
-
+    // console.log(`开始行为：${behavior.id}`);
     // 初始化事件队列
     eventQueue.initialize(behavior.events);
     // 所有的事件产生的视觉效果将会在这里完成.
@@ -75,8 +93,8 @@ function startBehavior(behaviorIndex) {
 
     // 队列完成时更新行为状态
     eventQueue.processNext = function () {
-        console.log('processNext1');
-        console.log(eventManager.eventNames())
+        // console.log('processNext1');
+        // console.log(eventManager.eventNames())
 
         if (eventQueue.currentIndex >= eventQueue.queue.length) {
             // console.log(`行为完成：${behavior.id}===========`);
@@ -100,9 +118,9 @@ function startBehavior(behaviorIndex) {
             console.log(`开始处理事件：${currentEvent}`);
             eventManager.on(currentEvent, eventQueue.handleEventComplete.bind(eventQueue));
         }
-        console.log('==注册的事件==');
-        console.log(eventManager.eventNames())
+        // console.log('==注册的事件==');
+        // console.log(eventManager.eventNames())
     };
 }
 
-export default startStep;
+export {startStep, steps};

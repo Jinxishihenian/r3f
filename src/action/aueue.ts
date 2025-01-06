@@ -40,8 +40,8 @@ class EventQueue {
         this.isProcessing = true;
         // 监听当前事件的完成
         eventManager.on(currentEvent, this.handleEventComplete.bind(this));
-        console.log('==注册的事件==');
-        console.log(eventManager.eventNames())
+        // console.log('==注册的事件==');
+        // console.log(eventManager.eventNames())
         // eventManager.on(currentEvent, () => {
         //     console.log('总有一天你会出现在我身边.')
         // });
