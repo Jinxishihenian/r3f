@@ -45,6 +45,7 @@ const BehaviorStatus = {
     // 已失败.
     Failed: "已失败",
 }
+// 事件无状态(由事件管理系统与事件队列管理).
 
 const step: any = {
     // 步骤.

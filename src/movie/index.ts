@@ -53,4 +53,4 @@ const play = {
     // ......
 };
 
-export {play}
+export {play, MovieType}
