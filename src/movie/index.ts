@@ -1,13 +1,14 @@
-import {ActionMap} from "../action/const.ts";
+import {ActionMap} from "../const/events.ts";
 
 type Movie = {
     movieType: MovieType,
     parameters: any,
 }
-const movie: Movie = {
-    movieType: MovieType.MOVE,
-    parameters: {},
-}
+// 类型.
+// const movie: Movie = {
+//     movieType: MovieType.MOVE,
+//     parameters: {},
+// }
 
 // 影视类型.
 enum MovieType {

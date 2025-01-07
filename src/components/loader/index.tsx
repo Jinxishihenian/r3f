@@ -18,12 +18,11 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
     // 使用动画.
     const {actions, mixer} = useAnimations(animations, scene);
     const group = useRef();
-
-    const handleClick = (event) => {
-        const clickedObject = event.object;
-        console.log('Clicked on:', clickedObject.name);
-        click && click(event);
-    };
+    // const handleClick = (event) => {
+    //     const clickedObject = event.object;
+    //     console.log('Clicked on:', clickedObject.name);
+    //     click && click(event);
+    // };
     useEffect(() => {
         // console.log('==actions==');
         // console.log(actions)
@@ -39,13 +38,13 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
             action?.setLoop(THREE.LoopOnce, 1);
             action!.clampWhenFinished = true;
             // mixer.addEventListener('finished', () => {
-            //     action?.stop();
+            //     event?.stop();
             // });
             action?.play();
             // if (animations.length == 31) {
             //     console.log("输液泵动画");
             //     mixer.addEventListener("finished", (e) => {
-            //         // if (e.action === actionA) {
+            //         // if (e.event === actionA) {
             //         //     // 播放 B 动画
             //         //     actionB.reset().play();
             //         // }

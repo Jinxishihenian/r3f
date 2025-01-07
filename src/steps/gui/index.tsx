@@ -1,23 +1,17 @@
 import styles from './index.module.css';
-import {Button, List, Typography} from 'antd';
-import {SomeMachineContext, StepsStatus} from "../steps";
+import {Button, List} from 'antd';
+import {SomeMachineContext, StepsStatus} from "../machine";
 import {useEffect, useState} from "react";
-import {steps} from "../action";
-import {eventManager, eventQueue} from "../action/aueue.ts";
+import {steps} from "../../event";
+import eventQueue from "../../event/queue.ts";
+// import {eventManager, eventQueue} from "../../event/queue.ts";
 
 // 列表.
 function Gui() {
-    // const data = [
-    //     '动作1,动作1,动作1,动作1,动作1',
-    //     '动作1,动作1,动作1,动作1,动作1',
-    //     '动作1,动作1,动作1,动作1,动作1',
-    //     '动作1,动作1,动作1,动作1,动作1',
-    //     '动作1,动作1,动作1,动作1,动作1',
-    // ];
     const [data, setDate] = useState([]);
     const [hint, setHint] = useState(eventQueue.queue[eventQueue.currentIndex]);
     const {step, currentStepId, currentSubTaskId} = SomeMachineContext.useSelector((state) => state?.context?.info);
-    const index = SomeMachineContext.useSelector((state) => state?.context?.index);
+    // const index = SomeMachineContext.useSelector((state) => state?.context?.index);
     const someActorRef = SomeMachineContext.useActorRef();
     // const running = step.filter((item: any) => true);
     useEffect(() => {
@@ -32,7 +26,6 @@ function Gui() {
     }, []);
     return (
         <div className={styles.main}>
-
             <List
                 header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
                 // footer={<div>Footer</div>}
@@ -41,7 +34,7 @@ function Gui() {
                 renderItem={(item: string) => (
                     <List.Item
                         onClick={() => {
-                            console.log('假设完成');
+                            // console.log('假设完成');
                             someActorRef.send({type: 'COMPLETE'});
                         }}
                     >

@@ -1,6 +1,4 @@
-import EventEmitter from "eventemitter3";
-
-const eventManager = new EventEmitter()
+import eventManager from "./emitter.ts";
 
 class EventQueue {
     queue: any[];
@@ -73,5 +71,5 @@ class EventQueue {
 
 // 创建事件队列实例
 const eventQueue = new EventQueue();
-// eventManager.on
-export {eventQueue, eventManager};
+
+export default eventQueue;

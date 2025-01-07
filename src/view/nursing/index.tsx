@@ -3,15 +3,17 @@ import {Canvas} from "@react-three/fiber";
 import {AxesHelper} from 'three';
 import {CameraControls, Environment, useGLTF} from '@react-three/drei';
 import styles from './index.module.css';
-import GLBModel from "../loader";
-import {INVALID, INFUSION_PUMPS} from "../const/animation.ts";
-import Gui from "../gui";
-import {ActionMap, BehaviorMap} from "../action/const.ts";
-import {eventQueue, eventManager} from "../action/aueue.ts";
-import {startStep, steps} from "../action";
-import {SomeMachineContext} from "../steps";
-import {play} from "../movie";
+import GLBModel from "../../components/loader";
+import {INVALID, INFUSION_PUMPS} from "../../const/animation.ts";
+import Gui from "../../steps/gui";
+// import {ActionMap} from "../../const/events.ts";
+// import {eventQueue, eventManager} from "../../event/queue.ts";
+import {startStep, steps} from "../../event";
+import {SomeMachineContext} from "../../steps/machine";
+// import {play} from "../../movie";
 import {Modal} from "antd";
+import eventQueue from "../../event/queue.ts";
+import eventManager from "../../event/emitter.ts";
 
 
 let lock = false;
@@ -28,7 +30,7 @@ function Nursing() {
                 console.log(event);
                 console.log(`小丑的把戏:${event}`);
                 Modal.confirm({
-                    content: <div>播放:   {event}   对应影视</div>,
+                    content: <div>播放: {event} 对应影视</div>,
                     onOk: () => {
                     },
                     onCancel: () => {

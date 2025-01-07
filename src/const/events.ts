@@ -123,4 +123,4 @@ const BehaviorMap = {
     }
 }
 
-export {BehaviorMap, ActionMap};
+export {ActionMap};

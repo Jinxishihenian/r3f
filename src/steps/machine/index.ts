@@ -22,7 +22,7 @@
 //     },
 // }
 // 上下文.
-import {ActionMap} from "../action/const.ts";
+import {ActionMap} from "../../const/events.ts";
 import {setup, assign} from 'xstate';
 import {createActorContext} from "@xstate/react";
 // 步骤状态.
@@ -77,8 +77,7 @@ const step: any = {
                     events: [ActionMap.SYQ_DJ2, ActionMap.AN_QR4],
                 }
             },
-            stepsStatus:
-            StepsStatus.UnStart,
+            stepsStatus: StepsStatus.UnStart,
         },
     "4": {
         children: {
@@ -211,11 +210,11 @@ const machine = setup({
                 'COMPLETE': {
                     actions: assign({
                         info: ({context, event}) => {
-                            console.log('原本信息');
+                            // console.log('原本信息');
                             // console.log(context1)
                             const {info: context1} = context;
-                            console.log('上下文');
-                            console.log(context1)
+                            // console.log('上下文');
+                            // console.log(context1)
 
                             // 当前行为索引.
                             const currentBehaviorId = context1.currentSubTaskId;
@@ -248,11 +247,11 @@ const machine = setup({
                                     context1.step[nextStepId].children[firstSubTask].behaviorStatus = BehaviorStatus.Running;
                                     context1.currentSubTaskId = firstSubTask;
                                 } else {
-                                    console.log("全部完成啦");
+                                    // console.log("全部完成啦");
                                 }
                             }
-                            console.log('新的信息');
-                            console.log(context1);
+                            // console.log('新的信息');
+                            // console.log(context1);
                             return {
                                 step: context1.step,
                                 currentStepId: context1.currentStepId, // 当前激活的步骤
@@ -269,13 +268,12 @@ const machine = setup({
                     context: (context, event) => {
                     }
                 }),
-                'TEST': {
-                    actions: 'aa'
-                }
+                // 'TEST': {
+                //     actions: 'aa'
+                // }
             },
         }
     },
-
 });
 
 const SomeMachineContext = createActorContext(machine);
