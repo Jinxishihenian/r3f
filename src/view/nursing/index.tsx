@@ -1,7 +1,7 @@
 import {useEffect, useRef} from 'react'
 import {Canvas} from "@react-three/fiber";
 import {AxesHelper} from 'three';
-import {CameraControls, Environment, useGLTF} from '@react-three/drei';
+import {CameraControls, Environment} from '@react-three/drei';
 import styles from './index.module.css';
 import GLBModel from "../../components/loader";
 import {INVALID, INFUSION_PUMPS} from "../../const/animation.ts";
@@ -11,7 +11,7 @@ import Gui from "../../steps/gui";
 import {startStep, steps} from "../../event";
 import {SomeMachineContext} from "../../steps/machine";
 // import {play} from "../../movie";
-import {Modal} from "antd";
+// import {Modal} from "antd";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 
@@ -25,17 +25,18 @@ function Nursing() {
             // console.log('初始化');
             // eventQueue.initialize(BehaviorMap[5]["5-1"]);
             // eventQueue.start();
+            // 步骤启动.
             startStep(0);
             eventQueue.onComplete((event) => {
-                console.log(event);
-                console.log(`小丑的把戏:${event}`);
-                Modal.confirm({
-                    content: <div>播放: {event} 对应影视</div>,
-                    onOk: () => {
-                    },
-                    onCancel: () => {
-                    }
-                });
+                // console.log(event);
+                // console.log(`小丑的把戏:${event}`);
+                // Modal.confirm({
+                //     content: <div>播放: {event} 对应影视</div>,
+                //     onOk: () => {
+                //     },
+                //     onCancel: () => {
+                //     }
+                // });
                 // TODO影视层.
                 // console.log(play[event]);
 
@@ -93,6 +94,7 @@ function Nursing() {
                         eventManager.emit("clickObjectA-2", "clickObjectA-2");
                     }}
                 />
+                {/*护士表*/}
                 <GLBModel
                     url="/HL_SM_HuShiBiao.glb"
                     position={[1.2, 0.62, 0.7]}
