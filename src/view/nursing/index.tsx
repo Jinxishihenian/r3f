@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Canvas} from "@react-three/fiber";
 import {AxesHelper} from 'three';
 import {CameraControls, Environment} from '@react-three/drei';
@@ -9,17 +9,28 @@ import Gui from "../../steps/gui";
 // import {ActionMap} from "../../const/events.ts";
 // import {eventQueue, eventManager} from "../../event/queue.ts";
 import {startStep, steps} from "../../event";
-import {SomeMachineContext} from "../../steps/machine";
+import {GlobalMachineContext} from "../../machine";
 // import {play} from "../../movie";
 // import {Modal} from "antd";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
+import Draggable from "../../components/draggable";
 
 
 let lock = false;
 
 function Nursing() {
-    const someActorRef = SomeMachineContext.useActorRef();
+    const globalActorRef = GlobalMachineContext.useActorRef();
+    const cameraControlRef = useRef<CameraControls | null>(null);
+    const draggable = GlobalMachineContext.useSelector((state) => state?.context?.draggable);
+    // 操作器(双手).
+    const hand = useState({
+        // 手中是否有东西.
+        // 当前手中物品.
+    });
+    // 相机轨道器是否启用.
+    const [orbitControlsEnabled, setOrbitControlsEnabled] = useState(true);
+
     useEffect(() => {
         if (!lock) {
             // console.log('初始化');
@@ -52,29 +63,43 @@ function Nursing() {
                 // // eventQueue.currentIndex >= eventQueue.queue.length
                 if (eventQueue.currentIndex >= eventQueue.queue.length) {
                     console.log('当前步骤完成~~~');
-                    someActorRef.send({type: 'COMPLETE'});
+                    globalActorRef.send({type: 'COMPLETE'});
                 }
             });
             lock = true;
         }
+        globalActorRef.subscribe((e) => {
+            console.log('==监听变化==draggable');
+            console.log(draggable)
+        });
     }, []);
-    const cameraControlRef = useRef<CameraControls | null>(null);
+
 
     // 病房场景搭建.
     return (
         <div className={styles.main}>
+            {/*<div>是否在拖拽状态中:{draggable.toString()}</div>*/}
             <Gui/>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
                 <color attach="background" args={["#008000"]}/>
                 <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} decay={0} intensity={Math.PI}/>
                 <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
+                <Draggable/>
                 {/*相机控制器 */}
-                <CameraControls ref={cameraControlRef}/>
+                <CameraControls ref={cameraControlRef} enabled={!draggable}/>
                 {/*辅助线*/}
                 <primitive object={new AxesHelper(20)}/>
                 {/*加载房间*/}
-                <GLBModel url="/bf.glb" position={[-6, 0, 0]}/>
+                <group
+                    // onClick={(e) => {
+                    // console.log('==开始捕获==');
+                    // console.log(e.object)
+                    // e.stopPropagation();
+
+                >
+                    <GLBModel url="/bf.glb" position={[-6, 0, 0]}/>
+                </group>
                 {/*移动式输液架 */}
                 <GLBModel url="/HL_SM_YiDongShiShuYeJia.glb" position={[-6, 0, 0]}/>
                 {/*治疗车*/}

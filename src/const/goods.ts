@@ -1,1 +1,3 @@
-const Goods = {};
+const Goods = {
+
+};

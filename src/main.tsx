@@ -3,13 +3,13 @@ import {createRoot} from 'react-dom/client'
 import './index.css'
 import App from './demo/App.tsx'
 import Nursing from "./view/nursing";
-// import {SomeMachineContext} from "../steps";
-import {SomeMachineContext} from "./steps/machine";
+// import {GlobalMachineContext} from "../steps";
+import {GlobalMachineContext} from "./machine";
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <SomeMachineContext.Provider>
+        <GlobalMachineContext.Provider>
             <Nursing/>
-        </SomeMachineContext.Provider>
+        </GlobalMachineContext.Provider>
     </StrictMode>,
 )

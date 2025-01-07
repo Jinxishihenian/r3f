@@ -1,5 +1,5 @@
 // import {eventManager, eventQueue} from "./queue.ts";
-import {step} from "../steps/machine";
+import {step} from "../machine";
 import eventQueue from "./queue.ts";
 import eventManager from "./emitter.ts";
 

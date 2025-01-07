@@ -22,7 +22,7 @@
 //     },
 // }
 // 上下文.
-import {ActionMap} from "../../const/events.ts";
+import {ActionMap} from "../const/events.ts";
 import {setup, assign} from 'xstate';
 import {createActorContext} from "@xstate/react";
 // 步骤状态.
@@ -201,13 +201,16 @@ const machine = setup({
             currentSubTaskId: "1-1", // 当前运行的行为.
         },
         index: 0,
+        // 拖拽状态上下文.
+        draggable: false,
+        // 锁屏状态上下文.
     },
     states: {
         // 最小单位为行为.
         "进行中": {
             on: {
                 // 当前行为完成(事件).
-                'COMPLETE': {
+                COMPLETE: {
                     actions: assign({
                         info: ({context, event}) => {
                             // console.log('原本信息');
@@ -268,6 +271,19 @@ const machine = setup({
                     context: (context, event) => {
                     }
                 }),
+                // 启用物品拖拽.
+                START_DRAG: {
+                    actions: assign({
+                        draggable: true,
+                    })
+
+                },
+                // 关闭物品拖拽.
+                STOP_DRAG: {
+                    actions: assign({
+                        draggable: false,
+                    })
+                },
                 // 'TEST': {
                 //     actions: 'aa'
                 // }
@@ -276,7 +292,7 @@ const machine = setup({
     },
 });
 
-const SomeMachineContext = createActorContext(machine);
+const GlobalMachineContext = createActorContext(machine);
 // const machine
 
 
@@ -309,4 +325,4 @@ function incrementLastNumberInString(str) {
     return result;
 }
 
-export {StepsStatus, BehaviorStatus, SomeMachineContext, step};
+export {StepsStatus, BehaviorStatus, GlobalMachineContext, step};

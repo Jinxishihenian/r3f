@@ -1,22 +1,24 @@
 import styles from './index.module.css';
 import {Button, List} from 'antd';
-import {SomeMachineContext, StepsStatus} from "../machine";
+import {GlobalMachineContext, StepsStatus} from "../../machine";
 import {useEffect, useState} from "react";
 import {steps} from "../../event";
 import eventQueue from "../../event/queue.ts";
+import eventManager from "../../event/emitter.ts";
 // import {eventManager, eventQueue} from "../../event/queue.ts";
 
-// 列表.
+// 步骤列表视图.
 function Gui() {
     const [data, setDate] = useState([]);
     const [hint, setHint] = useState(eventQueue.queue[eventQueue.currentIndex]);
-    const {step, currentStepId, currentSubTaskId} = SomeMachineContext.useSelector((state) => state?.context?.info);
-    // const index = SomeMachineContext.useSelector((state) => state?.context?.index);
-    const someActorRef = SomeMachineContext.useActorRef();
+    const {step, currentStepId, currentSubTaskId} = GlobalMachineContext.useSelector((state) => state?.context?.info);
+    // const index = GlobalMachineContext.useSelector((state) => state?.context?.index);
+    const globalActorRef = GlobalMachineContext.useActorRef();
     // const running = step.filter((item: any) => true);
     useEffect(() => {
         // 将进行中的过滤出来.
-        someActorRef.subscribe((event) => {
+        globalActorRef.subscribe((event) => {
+            console.log('subscribe1');
             const running = Object.values(step).filter((item: any) => {
                 return item.stepsStatus == StepsStatus.Running;
             });
@@ -35,7 +37,7 @@ function Gui() {
                     <List.Item
                         onClick={() => {
                             // console.log('假设完成');
-                            someActorRef.send({type: 'COMPLETE'});
+                            globalActorRef.send({type: 'COMPLETE'});
                         }}
                     >
                         <p>{item}</p>
