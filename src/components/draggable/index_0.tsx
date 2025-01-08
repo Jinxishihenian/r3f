@@ -2,9 +2,9 @@ import {useEffect, useRef, useState} from "react";
 import {useFrame, useThree} from "@react-three/fiber";
 import * as THREE from "three";
 import {GlobalMachineContext} from "../../machine";
-// TODO 测试功能,并不完善.
+
 // 拖拽视图层.
-const Draggable = (param) => {
+const Draggable0 = (param) => {
     const [clones, setClones] = useState([]);
     // 目标初始位置. 
     // const targetPosition;
@@ -26,12 +26,7 @@ const Draggable = (param) => {
     const intersectPoint = new THREE.Vector3();
     // 记录拖拽的偏移量.
     // const dragOffset = useRef(new THREE.Vector3());
-    const offsetVector = new THREE.Vector3(
-        // param?.position?.length > 0 ? param?.position[0] : 0,
-        // param?.position?.length > 0 ? param?.position[1] : 0,
-        // param?.position?.length > 0 ? param?.position[2] : 0,
-        0, 0, 0
-    ); // 偏移量
+    const offsetVector = new THREE.Vector3(-1, -1, -1); // 偏移量
     // 鼠标拖拽事件监听
     const onPointerDown = (e) => {
         console.log('鼠标按下事件');
@@ -72,7 +67,7 @@ const Draggable = (param) => {
             raycaster.setFromCamera(mouse, camera);
             raycaster.ray.intersectPlane(planeRef.current, intersectPoint);
             if (meshRef.current) {
-                meshRef.current.position.copy(intersectPoint).add(offsetVector).add(new THREE.Vector3(0, -0.2, 0));
+                meshRef.current.position.copy(intersectPoint).add(offsetVector).add(new THREE.Vector3(0, -0.1, 0));
             }
             // 获取拖拽物体的方向向量.
             // const direction = new THREE.Vector3();
@@ -119,34 +114,31 @@ const Draggable = (param) => {
             </group>
             {/*group*/}
             {/*目标层*/}
-            <group ref={targetRef as any} onClick={(event) => {
-                // console.log('克隆一个吧');
-                // 克隆一个.
-                const clone = event.object.clone();
-                // clone.position.copy(new THREE.Vector3(0, 0, 0));
-                if (clones.length > 0) {
-                    console.log('停止拖拽并,清理克隆物品');
-                    setClones(() => []);
-                    setIsDragging(false);
-                    globalActorRef.send({type: 'STOP_DRAG'});
-                } else {
-                    setClones((prev) => [...prev, clone]);
-                }
-            }}>
-                {
-                    param.children
-                }
-                {/*<mesh
+            <group ref={targetRef as any}>
+                <mesh
                     position={[1, 1, 1]}
-
+                    onClick={(event) => {
+                        // console.log('克隆一个吧');
+                        // 克隆一个.
+                        const clone = event.object.clone();
+                        // clone.position.copy(new THREE.Vector3(0, 0, 0));
+                        if (clones.length > 0) {
+                            console.log('停止拖拽并,清理克隆物品');
+                            setClones(() => []);
+                            setIsDragging(false);
+                            globalActorRef.send({type: 'STOP_DRAG'});
+                        } else {
+                            setClones((prev) => [...prev, clone]);
+                        }
+                    }}
                 >
                     <boxGeometry args={[0.1, 0.1, 0.1]}></boxGeometry>
                     <meshStandardMaterial color="orange"/>
-                </mesh>*/}
+                </mesh>
             </group>
 
         </group>
     );
 }
 
-export default Draggable;
+export default Draggable0;

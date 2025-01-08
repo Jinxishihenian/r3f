@@ -105,11 +105,13 @@ function Nursing() {
                 {/*治疗车*/}
                 <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
                 {/*输液泵静态*/}
-                <GLBModel
-                    url="/HL_ShuYeBeng.glb"
-                    position={[1, 0.7315777257693641, 0.8779830113159199]}
-                    rotation={[0, Math.PI, 0]}
-                />
+                <Draggable>
+                    <GLBModel
+                        url="/HL_ShuYeBeng.glb"
+                        position={[1, 0.7315777257693641, 0.8779830113159199]}
+                        rotation={[0, Math.PI, 0]}
+                    />
+                </Draggable>
                 {/*棉签*/}
                 <GLBModel
                     url="/HL_YiYongMianQianBaoZhuang.glb"
@@ -120,14 +122,17 @@ function Nursing() {
                     }}
                 />
                 {/*护士表*/}
-                <GLBModel
-                    url="/HL_SM_HuShiBiao.glb"
-                    position={[1.2, 0.62, 0.7]}
-                    click={() => {
-                        eventManager.emit("clickObjectA-1", "clickObjectA-1");
-                    }}
-                    // position={[-6, 0, 0]}
-                />
+                <Draggable>
+                    <GLBModel
+                        url="/HL_SM_HuShiBiao.glb"
+                        position={[1.2, 0.62, 0.7]}
+                        click={() => {
+                            eventManager.emit("clickObjectA-1", "clickObjectA-1");
+                        }}
+                        // position={[-6, 0, 0]}
+                    />
+                </Draggable>
+
                 {/*吉尔碘*/}
                 <GLBModel
                     url="/HL_JiErDianXiaoDuYe.glb"
