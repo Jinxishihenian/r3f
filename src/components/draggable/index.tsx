@@ -34,7 +34,9 @@ const Draggable = (param) => {
     ); // 偏移量
     // 鼠标拖拽事件监听
     const onPointerDown = (e) => {
-        console.log('鼠标按下事件');
+        console.log('==鼠标按下事件==拾取');
+        console.log(e.object)
+        param?.click(e.object);
         e.stopPropagation();
         setIsDragging(true);
         // 获取鼠标点击位置的法向方向(与相机视线方向一致)
@@ -43,7 +45,8 @@ const Draggable = (param) => {
         // 定义拖拽平面,设置平面的位置为固定距离.
         planeRef.current.setFromNormalAndCoplanarPoint(normal, camera.position.clone().add(normal.multiplyScalar(fixedDistance)));
         // scene.orbitControls.enabled = false;
-        globalActorRef.send({type: 'START_DRAG'});
+        // 发送事件并传值.
+        globalActorRef.send({type: 'START_DRAG', payload: e.object.name});
         console.log('开始拖拽');
     }
 
@@ -120,6 +123,9 @@ const Draggable = (param) => {
             {/*group*/}
             {/*目标层*/}
             <group ref={targetRef as any} onClick={(event) => {
+                console.log('==点击物品==');
+                console.log(event.object)
+                event.stopPropagation();
                 // console.log('克隆一个吧');
                 // 克隆一个.
                 const clone = event.object.clone();
@@ -133,12 +139,9 @@ const Draggable = (param) => {
                     setClones((prev) => [...prev, clone]);
                 }
             }}>
-                {
-                    param.children
-                }
+                {param.children}
                 {/*<mesh
                     position={[1, 1, 1]}
-
                 >
                     <boxGeometry args={[0.1, 0.1, 0.1]}></boxGeometry>
                     <meshStandardMaterial color="orange"/>

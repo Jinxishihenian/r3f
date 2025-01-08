@@ -195,6 +195,7 @@ const machine = setup({
 }).createMachine({
     initial: "进行中",
     context: {
+        // 步骤信息.
         info: {
             step: step,
             currentStepId: "1", // 当前激活的步骤
@@ -204,6 +205,19 @@ const machine = setup({
         // 拖拽状态上下文.
         draggable: false,
         // 锁屏状态上下文.
+        screen: {
+            disable: false,
+        },
+        // 人物信息(大概率不用实时更新).
+        player: {
+            hand: {
+                // 手中是否有物品.
+                // 物品名称.
+                collectName: "",
+            },
+            // position: {},
+            // angle: {},
+        },
     },
     states: {
         // 最小单位为行为.
@@ -274,9 +288,25 @@ const machine = setup({
                 // 启用物品拖拽.
                 START_DRAG: {
                     actions: assign({
-                        draggable: true,
+                        draggable: ({context, event}) => {
+                            console.log('===测试===');
+                            console.log(context)
+                            console.log(event)
+                            return true;
+                        },
+                        player: ({context, event}) => {
+                            console.log('===测试===');
+                            console.log(context)
+                            console.log(event)
+                            return {
+                                hand: {
+                                    // 手中是否有物品.
+                                    // 物品名称.
+                                    collectName: event.payload,
+                                },
+                            };
+                        },
                     })
-
                 },
                 // 关闭物品拖拽.
                 STOP_DRAG: {

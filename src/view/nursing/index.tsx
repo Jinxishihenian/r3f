@@ -15,6 +15,7 @@ import {GlobalMachineContext} from "../../machine";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import Draggable from "../../components/draggable";
+import {ActionMap} from "../../const/events.ts";
 
 
 let lock = false;
@@ -39,6 +40,15 @@ function Nursing() {
             // 步骤启动.
             startStep(0);
             eventQueue.onComplete((event) => {
+                alert(event);
+                if (event) {
+                    // 设置位置.
+                    player({type: '', ref: '', position: ''});
+                }
+                if (event) {
+                    // 播放动画.
+                    player({type: '', ref: '', position: ''});
+                }
                 // console.log(event);
                 // console.log(`小丑的把戏:${event}`);
                 // Modal.confirm({
@@ -74,7 +84,8 @@ function Nursing() {
         });
     }, []);
 
-
+    const player = (pamams) => {
+    }
     // 病房场景搭建.
     return (
         <div className={styles.main}>
@@ -101,11 +112,24 @@ function Nursing() {
                     <GLBModel url="/bf.glb" position={[-6, 0, 0]}/>
                 </group>
                 {/*移动式输液架 */}
-                <GLBModel url="/HL_SM_YiDongShiShuYeJia.glb" position={[-6, 0, 0]}/>
+                <GLBModel
+                    click={(e) => {
+                        console.log('==输液架==')
+                        console.log(e)
+                        eventManager.emit(ActionMap.SYB_FZ1, ActionMap.SYB_FZ1);
+                    }}
+                    url="/HL_SM_YiDongShiShuYeJia.glb"
+                    position={[-6, 0, 0]}
+                />
                 {/*治疗车*/}
                 <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
                 {/*输液泵静态*/}
-                <Draggable>
+                <Draggable
+                    click={(e) => {
+                        console.log(ActionMap.SYB_SQ);
+                        eventManager.emit(ActionMap.SYB_SQ, ActionMap.SYB_SQ);
+                    }}
+                >
                     <GLBModel
                         url="/HL_ShuYeBeng.glb"
                         position={[1, 0.7315777257693641, 0.8779830113159199]}
@@ -182,8 +206,7 @@ function Nursing() {
                     animationName={"1.5少量液体滴入弯盘内"}
                     playOnce={true}
                     click={(e) => {
-                        // console.log(e);
-                        // console.log(e.object.name);
+                        console.log(e.object.name);
                         // console.log('模拟执行');
                         // eventManager.emit(ActionMap.AN_QR7);
                         // eventManager.emit(ActionMap.AN_DH);
