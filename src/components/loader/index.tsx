@@ -12,8 +12,10 @@ import {
     SSAO,
     Outline
 } from '@react-three/postprocessing'
+import useBearStore from "../../zustand";
 
-function GLBModel({url, animationName, playOnce, click, ...props}) {
+function GLBModel({url, animationName, playOnce, click, name, ...props}) {
+    const addModel = useBearStore((state) => state.addModel);
     const {scene, animations} = useGLTF(url); // 使用 useGLTF 加载 .glb 模型
     // 使用动画.
     const {actions, mixer} = useAnimations(animations, scene);
@@ -66,17 +68,25 @@ function GLBModel({url, animationName, playOnce, click, ...props}) {
         }
 
     }, []);
+    useEffect(() => {
+        if (name) {
+            console.log('==存储==');
+            console.log(name);
+            console.log(scene)
+            addModel(name, scene);
+        }
+    }, [name]);
     return (
-        <group
-            ref={group as any}
-            {...props}
-            // onClick={(event) => {
-            //     click && handleClick(event);
-            // }}
-            onClick={click}
-        >
-            <primitive object={scene}/>
-        </group>
+        // <group
+        //     ref={group as any}
+        //     {...props}
+        //     // onClick={(event) => {
+        //     //     click && handleClick(event);
+        //     // }}
+        //     onClick={click}
+        // >
+            <primitive {...props} object={scene}/>
+        // </group>
     );
     // return ;
 }

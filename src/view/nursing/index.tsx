@@ -16,6 +16,8 @@ import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import Draggable from "../../components/draggable";
 import {ActionMap} from "../../const/events.ts";
+import useBearStore from "../../zustand";
+import usePlay from "../../hooks";
 
 
 let lock = false;
@@ -24,6 +26,10 @@ function Nursing() {
     const globalActorRef = GlobalMachineContext.useActorRef();
     const cameraControlRef = useRef<CameraControls | null>(null);
     const draggable = GlobalMachineContext.useSelector((state) => state?.context?.draggable);
+    const bears = useBearStore((state) => state.bears);
+    const increasePopulation = useBearStore((state) => state.increasePopulation)
+    const models = useBearStore((state) => state.models);
+    const {play} = usePlay();
     // 操作器(双手).
     const hand = useState({
         // 手中是否有东西.
@@ -39,16 +45,22 @@ function Nursing() {
             // eventQueue.start();
             // 步骤启动.
             startStep(0);
+
             eventQueue.onComplete((event) => {
-                alert(event);
-                if (event) {
-                    // 设置位置.
-                    player({type: '', ref: '', position: ''});
-                }
-                if (event) {
-                    // 播放动画.
-                    player({type: '', ref: '', position: ''});
-                }
+                // 事件操作记录层(每一个有效事件都会被记录).
+
+                // 表现层.
+                play('xx');
+                // 伪代码.
+                // alert(event);
+                // if (event) {
+                //     // 设置位置.
+                //     player({type: '', ref: '', position: ''});
+                // }
+                // if (event) {
+                //     // 播放动画.
+                //     player({type: '', ref: '', position: ''});
+                // }
                 // console.log(event);
                 // console.log(`小丑的把戏:${event}`);
                 // Modal.confirm({
@@ -84,12 +96,26 @@ function Nursing() {
         });
     }, []);
 
+
+    useEffect(() => {
+        // models['11']
+        setTimeout(() => {
+            // console.log();
+            // console.log(models)
+            if (models["输液泵"]) {
+                // alert("一千年以后")
+                // console.log(models["输液泵"]);
+                models["输液泵"].position.set(0, 0, 0);
+            }
+        }, 10000);
+    }, [models]);
+
     const player = (pamams) => {
     }
     // 病房场景搭建.
     return (
         <div className={styles.main}>
-            {/*<div>是否在拖拽状态中:{draggable.toString()}</div>*/}
+            <div onClick={increasePopulation}>是否在拖拽状态中:{draggable.toString()}:{bears}</div>
             <Gui/>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
@@ -102,129 +128,139 @@ function Nursing() {
                 {/*辅助线*/}
                 <primitive object={new AxesHelper(20)}/>
                 {/*加载房间*/}
+                {/*<group*/}
+                {/*    // onClick={(e) => {*/}
+                {/*    // console.log('==开始捕获==');*/}
+                {/*    // console.log(e.object)*/}
+                {/*    // e.stopPropagation();*/}
+                {/*>*/}
                 <group
-                    // onClick={(e) => {
-                    // console.log('==开始捕获==');
-                    // console.log(e.object)
-                    // e.stopPropagation();
+                    onClick={(e) => {
+                        // e.d
+                        e.stopPropagation();
+                        console.log(e.object);
 
+                    }}
                 >
                     <GLBModel url="/bf.glb" position={[-6, 0, 0]}/>
-                </group>
-                {/*移动式输液架 */}
-                <GLBModel
-                    click={(e) => {
-                        console.log('==输液架==')
-                        console.log(e)
-                        eventManager.emit(ActionMap.SYB_FZ1, ActionMap.SYB_FZ1);
-                    }}
-                    url="/HL_SM_YiDongShiShuYeJia.glb"
-                    position={[-6, 0, 0]}
-                />
-                {/*治疗车*/}
-                <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
-                {/*输液泵静态*/}
-                <Draggable
-                    click={(e) => {
-                        console.log(ActionMap.SYB_SQ);
-                        eventManager.emit(ActionMap.SYB_SQ, ActionMap.SYB_SQ);
-                    }}
-                >
+                    {/*</group>*/}
+                    {/*移动式输液架 */}
                     <GLBModel
-                        url="/HL_ShuYeBeng.glb"
-                        position={[1, 0.7315777257693641, 0.8779830113159199]}
-                        rotation={[0, Math.PI, 0]}
+                        // click={(e) => {
+                        //     console.log('==输液架==')
+                        //     console.log(e)
+                        //     eventManager.emit(ActionMap.SYB_FZ1, ActionMap.SYB_FZ1);
+                        // }}
+                        url="/HL_SM_YiDongShiShuYeJia.glb"
+                        position={[-6, 0, 0]}
                     />
-                </Draggable>
-                {/*棉签*/}
-                <GLBModel
-                    url="/HL_YiYongMianQianBaoZhuang.glb"
-                    position={[1.2, 0.62, 0.8779830113159199]}
-                    // position={[-6, 0, 0]}
-                    click={() => {
-                        eventManager.emit("clickObjectA-2", "clickObjectA-2");
-                    }}
-                />
-                {/*护士表*/}
-                <Draggable>
+                    {/*治疗车*/}
+                    <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
+                    {/*输液泵静态*/}
+                    <Draggable
+                        click={(e) => {
+                            console.log(ActionMap.SYB_SQ);
+                            eventManager.emit(ActionMap.SYB_SQ, ActionMap.SYB_SQ);
+                        }}
+                    >
+                        <GLBModel
+                            url="/HL_ShuYeBeng.glb"
+                            position={[1, 0.7315777257693641, 0.8779830113159199]}
+                            rotation={[0, Math.PI, 0]}
+                            name="输液泵"
+                        />
+                    </Draggable>
+                    {/*棉签*/}
                     <GLBModel
-                        url="/HL_SM_HuShiBiao.glb"
-                        position={[1.2, 0.62, 0.7]}
+                        url="/HL_YiYongMianQianBaoZhuang.glb"
+                        position={[1.2, 0.62, 0.8779830113159199]}
+                        // position={[-6, 0, 0]}
                         click={() => {
-                            eventManager.emit("clickObjectA-1", "clickObjectA-1");
+                            eventManager.emit("clickObjectA-2", "clickObjectA-2");
+                        }}
+                    />
+                    {/*护士表*/}
+                    <Draggable>
+                        <GLBModel
+                            url="/HL_SM_HuShiBiao.glb"
+                            position={[1.2, 0.62, 0.7]}
+                            click={() => {
+                                eventManager.emit("clickObjectA-1", "clickObjectA-1");
+                            }}
+                            // position={[-6, 0, 0]}
+                        />
+                    </Draggable>
+
+                    {/*吉尔碘*/}
+                    <GLBModel
+                        url="/HL_JiErDianXiaoDuYe.glb"
+                        position={[1.3, 0.64, 0.8779830113159199]}
+                        click={(e) => {
+                            // console.log(e);
+                            // console.log(e.object.name);
+                            // console.log('模拟执行');
+                            // eventManager.emit(ActionMap.AN_QR7);
+                            // eventManager.emit(ActionMap.AN_DH);
+                            // 阻止冒泡.
+                            eventManager.emit("confirmAction", "confirmAction");
+                            // eventManager.emit("ObjectB");
+                            // eventManager.emit("confirmAction");
+                            e.stopPropagation();
                         }}
                         // position={[-6, 0, 0]}
                     />
-                </Draggable>
+                    {/*男性病人*/}
+                    <GLBModel
+                        url="/HL_NanXingBingRen.glb"
+                        position={[-0.3, 0.7, 0.6779830113159199]}
+                        rotation={[0, Math.PI, 0]}
+                        animationName={INVALID.ACTION}
+                        // position={[-6, 0, 0]}
+                        click={(e) => {
+                            // console.log(e);
+                            // console.log(e.object.name);
+                            // console.log('模拟执行');
+                            // eventManager.emit(ActionMap.AN_QR7);
+                            // eventManager.emit(ActionMap.AN_DH);
+                            // 阻止冒泡.
 
-                {/*吉尔碘*/}
-                <GLBModel
-                    url="/HL_JiErDianXiaoDuYe.glb"
-                    position={[1.3, 0.64, 0.8779830113159199]}
-                    click={(e) => {
-                        // console.log(e);
-                        // console.log(e.object.name);
-                        // console.log('模拟执行');
-                        // eventManager.emit(ActionMap.AN_QR7);
-                        // eventManager.emit(ActionMap.AN_DH);
-                        // 阻止冒泡.
-                        eventManager.emit("confirmAction", "confirmAction");
-                        // eventManager.emit("ObjectB");
-                        // eventManager.emit("confirmAction");
-                        e.stopPropagation();
-                    }}
-                    // position={[-6, 0, 0]}
-                />
-                {/*男性病人*/}
-                <GLBModel
-                    url="/HL_NanXingBingRen.glb"
-                    position={[-0.3, 0.7, 0.6779830113159199]}
-                    rotation={[0, Math.PI, 0]}
-                    animationName={INVALID.ACTION}
-                    // position={[-6, 0, 0]}
-                    click={(e) => {
-                        // console.log(e);
-                        // console.log(e.object.name);
-                        // console.log('模拟执行');
-                        // eventManager.emit(ActionMap.AN_QR7);
-                        // eventManager.emit(ActionMap.AN_DH);
-                        // 阻止冒泡.
+                            // eventManager.emit("confirmAction");
+                            eventManager.emit("clickObjectB", "clickObjectB");
+                            // eventManager.emit("clickObjectA", "clickObjectA");
+                            e.stopPropagation();
+                        }}
+                    />
+                    {/*输液泵动画*/}
+                    <GLBModel
+                        url="/HL_ShuYeBeng-DongHua.glb"
+                        // position: [6.506, 1.006, 0.968],
+                        position={[-6, 0, 0]}
+                        // rotation={[0, Math.PI, 0]}
+                        // animationName={INFUSION_PUMPS.CONNECT}
+                        animationName={"1.5少量液体滴入弯盘内"}
+                        playOnce={true}
+                        click={(e) => {
+                            console.log(e.object.name);
+                            // console.log('模拟执行');
+                            // eventManager.emit(ActionMap.AN_QR7);
+                            // eventManager.emit(ActionMap.AN_DH);
+                            // 阻止冒泡.
+                            // eventManager.emit("confirmAction", "confirmAction");
+                            // eventManager.emit("clickObjectC", "clickObjectC");
+                            // eventManager.emit("clickObjectB", "clickObjectB");
+                            // eventManager.emit("confirmAction", "confirmAction");
+                            // eventManager.emit("clickObjectB", "clickObjectB");
+                            eventManager.emit("clickObjectA", "clickObjectA");
+                            // eventQueue.processNext();
+                            // eventManager.emit("ObjectB");
+                            // eventManager.emit("confirmAction");
+                            e.stopPropagation();
+                        }}
 
-                        // eventManager.emit("confirmAction");
-                        eventManager.emit("clickObjectB", "clickObjectB");
-                        // eventManager.emit("clickObjectA", "clickObjectA");
-                        e.stopPropagation();
-                    }}
-                />
-                {/*输液泵动画*/}
-                <GLBModel
-                    url="/HL_ShuYeBeng-DongHua.glb"
-                    // position: [6.506, 1.006, 0.968],
-                    position={[-6, 0, 0]}
-                    // rotation={[0, Math.PI, 0]}
-                    // animationName={INFUSION_PUMPS.CONNECT}
-                    animationName={"1.5少量液体滴入弯盘内"}
-                    playOnce={true}
-                    click={(e) => {
-                        console.log(e.object.name);
-                        // console.log('模拟执行');
-                        // eventManager.emit(ActionMap.AN_QR7);
-                        // eventManager.emit(ActionMap.AN_DH);
-                        // 阻止冒泡.
-                        // eventManager.emit("confirmAction", "confirmAction");
-                        // eventManager.emit("clickObjectC", "clickObjectC");
-                        // eventManager.emit("clickObjectB", "clickObjectB");
-                        // eventManager.emit("confirmAction", "confirmAction");
-                        // eventManager.emit("clickObjectB", "clickObjectB");
-                        eventManager.emit("clickObjectA", "clickObjectA");
-                        // eventQueue.processNext();
-                        // eventManager.emit("ObjectB");
-                        // eventManager.emit("confirmAction");
-                        e.stopPropagation();
-                    }}
+                        // position={[-6, 0, 0]}
+                    />
+                </group>
 
-                    // position={[-6, 0, 0]}
-                />
                 {/*HDR */}
                 <Environment files={'/qwantani_dusk_2_1k.hdr'}/>
             </Canvas>

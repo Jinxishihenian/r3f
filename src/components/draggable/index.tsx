@@ -2,9 +2,11 @@ import {useEffect, useRef, useState} from "react";
 import {useFrame, useThree} from "@react-three/fiber";
 import * as THREE from "three";
 import {GlobalMachineContext} from "../../machine";
+import useBearStore from "../../zustand";
 // TODO 测试功能,并不完善.
 // 拖拽视图层.
 const Draggable = (param) => {
+
     const [clones, setClones] = useState([]);
     // 目标初始位置. 
     // const targetPosition;
