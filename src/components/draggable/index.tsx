@@ -6,7 +6,6 @@ import useBearStore from "../../zustand";
 // TODO 测试功能,并不完善.
 // 拖拽视图层.
 const Draggable = (param) => {
-
     const [clones, setClones] = useState([]);
     // 目标初始位置. 
     // const targetPosition;
@@ -36,8 +35,8 @@ const Draggable = (param) => {
     ); // 偏移量
     // 鼠标拖拽事件监听
     const onPointerDown = (e) => {
-        console.log('==鼠标按下事件==拾取');
-        console.log(e.object)
+        // console.log('==鼠标按下事件==拾取');
+        // console.log(e.object)
         param?.click(e.object);
         e.stopPropagation();
         setIsDragging(true);
@@ -118,7 +117,7 @@ const Draggable = (param) => {
             onPointerDown={onPointerDown}
             onPointerUp={onPointerUp}
         >
-            {/*拖拽层*/}
+            {/*拖拽层(拷贝层)*/}
             <group ref={meshRef as any}>
                 {clones.map((clone, index) => <primitive key={index} object={clone}/>)}
             </group>

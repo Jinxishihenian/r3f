@@ -1,21 +1,24 @@
 import {Outlines, useAnimations, useGLTF} from "@react-three/drei";
 import {useEffect, useRef, useState} from "react";
 import * as THREE from "three";
-import {
-    Bloom,
-    DepthOfField,
-    EffectComposer,
-    Noise,
-    Vignette,
-    N8AO,
-    SMAA,
-    SSAO,
-    Outline
-} from '@react-three/postprocessing'
+// import {
+//     Bloom,
+//     DepthOfField,
+//     EffectComposer,
+//     Noise,
+//     Vignette,
+//     N8AO,
+//     SMAA,
+//     SSAO,
+//     Outline
+// } from '@react-three/postprocessing'
 import useBearStore from "../../zustand";
 
 function GLBModel({url, animationName, playOnce, click, name, ...props}) {
-    const addModel = useBearStore((state) => state.addModel);
+    // 存放所有模型引用方便管理.
+    const {addModel, addAnimation} = useBearStore((state) => state.addModel);
+    // 存放所有动画引用方便管理.
+    // const addAnimation = useBearStore();
     const {scene, animations} = useGLTF(url); // 使用 useGLTF 加载 .glb 模型
     // 使用动画.
     const {actions, mixer} = useAnimations(animations, scene);
@@ -70,10 +73,12 @@ function GLBModel({url, animationName, playOnce, click, name, ...props}) {
     }, []);
     useEffect(() => {
         if (name) {
-            console.log('==存储==');
-            console.log(name);
-            console.log(scene)
+            // console.log('存储物品信息');
+            // console.log(scene);
+            // console.log('===存储信息===');
+            // console.log(name)
             addModel(name, scene);
+            addAnimation(name, actions);
         }
     }, [name]);
     return (
@@ -85,7 +90,7 @@ function GLBModel({url, animationName, playOnce, click, name, ...props}) {
         //     // }}
         //     onClick={click}
         // >
-            <primitive {...props} object={scene}/>
+        <primitive {...props} object={scene}/>
         // </group>
     );
     // return ;

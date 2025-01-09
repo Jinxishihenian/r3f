@@ -15,9 +15,10 @@ import {GlobalMachineContext} from "../../machine";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import Draggable from "../../components/draggable";
-import {ActionMap} from "../../const/events.ts";
+// import {ActionMap} from "../../const/events.ts";
 import useBearStore from "../../zustand";
-import usePlay from "../../hooks";
+import useMovie from "../../hooks";
+import Goods from "../../const/goods.ts";
 
 
 let lock = false;
@@ -29,7 +30,7 @@ function Nursing() {
     const bears = useBearStore((state) => state.bears);
     const increasePopulation = useBearStore((state) => state.increasePopulation)
     const models = useBearStore((state) => state.models);
-    const {play} = usePlay();
+    const {play} = useMovie();
     // 操作器(双手).
     const hand = useState({
         // 手中是否有东西.
@@ -46,11 +47,14 @@ function Nursing() {
             // 步骤启动.
             startStep(0);
 
-            eventQueue.onComplete((event) => {
+            eventQueue.onComplete(async (event) => {
+                console.log('==事件==');
+                console.log(event)
                 // 事件操作记录层(每一个有效事件都会被记录).
-
                 // 表现层.
-                play('xx');
+                console.log('==表现层==');
+                console.log(models)
+                await play(event);
                 // 伪代码.
                 // alert(event);
                 // if (event) {
@@ -97,25 +101,21 @@ function Nursing() {
     }, []);
 
 
-    useEffect(() => {
-        // models['11']
-        setTimeout(() => {
-            // console.log();
-            // console.log(models)
-            if (models["输液泵"]) {
-                // alert("一千年以后")
-                // console.log(models["输液泵"]);
-                models["输液泵"].position.set(0, 0, 0);
-            }
-        }, 10000);
-    }, [models]);
+    // useEffect(() => {
+    //
+    //     if (models["输液泵"]) {
+    //         models["输液泵"].position.set(0, 0, 0);
+    //         console.log('222models222')
+    //         console.log(models)
+    //     }
+    // }, [models]);
 
     const player = (pamams) => {
     }
     // 病房场景搭建.
     return (
         <div className={styles.main}>
-            <div onClick={increasePopulation}>是否在拖拽状态中:{draggable.toString()}:{bears}</div>
+            {/*<div onClick={increasePopulation}>是否在拖拽状态中:{draggable.toString()}:{bears}</div>*/}
             <Gui/>
             <Canvas>
                 <ambientLight intensity={Math.PI / 2}/>
@@ -138,7 +138,7 @@ function Nursing() {
                     onClick={(e) => {
                         // e.d
                         e.stopPropagation();
-                        console.log(e.object);
+                        // console.log(e.object);
 
                     }}
                 >
@@ -157,19 +157,21 @@ function Nursing() {
                     {/*治疗车*/}
                     <GLBModel url="/HL_ZhiLiaoChe_BingFang.glb" position={[-6, 0, 0]}/>
                     {/*输液泵静态*/}
-                    <Draggable
-                        click={(e) => {
-                            console.log(ActionMap.SYB_SQ);
-                            eventManager.emit(ActionMap.SYB_SQ, ActionMap.SYB_SQ);
-                        }}
-                    >
-                        <GLBModel
-                            url="/HL_ShuYeBeng.glb"
-                            position={[1, 0.7315777257693641, 0.8779830113159199]}
-                            rotation={[0, Math.PI, 0]}
-                            name="输液泵"
-                        />
-                    </Draggable>
+                    {/*<Draggable*/}
+                    {/*    click={(e) => {*/}
+                    {/*        console.log(ActionMap.SYB_SQ);*/}
+                    {/*        eventManager.emit(ActionMap.SYB_SQ, ActionMap.SYB_SQ);*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    <GLBModel
+                        url="/HL_ShuYeBeng.glb"
+                        // position={[1, 0.7315777257693641, 0.8779830113159199]}
+                        position={[1, 0.7315777257693641, 0.8779830113159199]}
+                        rotation={[0, Math.PI, 0]}
+                        // name="输液泵"
+                        name={Goods.SYB_JT.name}
+                    />
+                    {/*</Draggable>*/}
                     {/*棉签*/}
                     <GLBModel
                         url="/HL_YiYongMianQianBaoZhuang.glb"

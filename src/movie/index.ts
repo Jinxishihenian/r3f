@@ -1,4 +1,5 @@
 import {ActionMap} from "../const/events.ts";
+import Goods from "../const/goods.ts";
 
 type Movie = {
     movieType: MovieType,
@@ -13,6 +14,7 @@ type Movie = {
 // 影视类型.
 enum MovieType {
     // 位移(跳步部分).
+    // TRANSFIGURATION
     MOVE,
     // 模型动画(跳步部分).
     MODEL_ANIMATION,
@@ -40,18 +42,32 @@ enum MovieType {
 
 // 根据对应动作播放对应动画.
 // 暂未启用(负责历史记录).
-const play = {
+// 事件映射影视.
+const EventMapMovie = {
+    // 场景初始化.
     [ActionMap.SYB_SQ]: [
         {
             movieType: MovieType.MOVE,
-            parameters: {},
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_JT.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        position: [0.5, 1.2, 1],
+                        rotation: [],
+                    }
+                },
+            },
         },
-        {
-            movieType: MovieType.CAMERA_ANIMATION,
-            parameters: {},
-        }
+        // {
+        //     movieType: MovieType.CAMERA_ANIMATION,
+        //     parameters: {},
+        // }
     ],
     // ......
 };
 
-export {play, MovieType}
+export {EventMapMovie, MovieType}
