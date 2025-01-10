@@ -48,13 +48,18 @@ function Nursing() {
             startStep(0);
 
             eventQueue.onComplete(async (event) => {
-                console.log('==事件==');
-                console.log(event)
+                if (eventQueue.currentIndex >= eventQueue.queue.length) {
+                    console.log('当前步骤完成~~~');
+                    globalActorRef.send({type: 'COMPLETE'});
+                }
+                // console.log('==事件==');
+                // console.log(event)
                 // 事件操作记录层(每一个有效事件都会被记录).
                 // 表现层.
-                console.log('==表现层==');
-                console.log(models)
+                // console.log('==表现层==');
+                // console.log(models)
                 await play(event);
+                console.log('播放完成');
                 // 伪代码.
                 // alert(event);
                 // if (event) {
@@ -87,10 +92,7 @@ function Nursing() {
                 //     console.log('表现confirmAction')
                 // }
                 // // eventQueue.currentIndex >= eventQueue.queue.length
-                if (eventQueue.currentIndex >= eventQueue.queue.length) {
-                    console.log('当前步骤完成~~~');
-                    globalActorRef.send({type: 'COMPLETE'});
-                }
+
             });
             lock = true;
         }
@@ -239,8 +241,9 @@ function Nursing() {
                         position={[-6, 0, 0]}
                         // rotation={[0, Math.PI, 0]}
                         // animationName={INFUSION_PUMPS.CONNECT}
-                        animationName={"1.5少量液体滴入弯盘内"}
+                        // animationName={"1.5少量液体滴入弯盘内"}
                         playOnce={true}
+                        name={Goods.SYB_DH.name}
                         click={(e) => {
                             console.log(e.object.name);
                             // console.log('模拟执行');

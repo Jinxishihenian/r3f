@@ -1,5 +1,6 @@
 import {ActionMap} from "../const/events.ts";
 import Goods from "../const/goods.ts";
+import {INFUSION_PUMPS} from "../const/animation.ts";
 
 type Movie = {
     movieType: MovieType,
@@ -13,6 +14,8 @@ type Movie = {
 
 // 影视类型.
 enum MovieType {
+    // 点击拾取.
+    CLICK_PICKUP,
     // 位移(跳步部分).
     // TRANSFIGURATION
     MOVE,
@@ -45,9 +48,11 @@ enum MovieType {
 // 事件映射影视.
 const EventMapMovie = {
     // 场景初始化.
+    // 缺少一个初始化.
+    // 步骤1.
     [ActionMap.SYB_SQ]: [
         {
-            movieType: MovieType.MOVE,
+            movieType: MovieType.CLICK_PICKUP,
             parameters: {
                 sessionId: "",
                 name: Goods.SYB_JT.name,
@@ -56,7 +61,7 @@ const EventMapMovie = {
                 timestamp: "",
                 sceneState: {
                     objectStates: {
-                        position: [0.5, 1.2, 1],
+                        position: [0.5, 2, 1],
                         rotation: [],
                     }
                 },
@@ -67,7 +72,73 @@ const EventMapMovie = {
         //     parameters: {},
         // }
     ],
-    // ......
+    [ActionMap.SYB_FZ1]: [
+        {
+            movieType: MovieType.MOVE,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_JT.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+        // {
+        //     movieType: MovieType.CAMERA_ANIMATION,
+        //     parameters: {},
+        // }
+    ],
+    // 步骤2.
+    [ActionMap.SYQ_Dj1]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.PQ,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
+    [ActionMap.ANT_QR1]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.ANT_QR2]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR3]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.WAIBAOZ,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ]
 };
 
 export {EventMapMovie, MovieType}

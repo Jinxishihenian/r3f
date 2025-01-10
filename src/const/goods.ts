@@ -3,7 +3,7 @@ const Goods = {
         name: "输液泵_静态",
     },
     SYB_DH: {
-        name: "输液泵_静态",
+        name: "输液泵_动画",
         children: {
             SHB_BJ_SYE: {
                 name: "输液器",

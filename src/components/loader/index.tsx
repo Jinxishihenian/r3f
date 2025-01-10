@@ -16,7 +16,7 @@ import useBearStore from "../../zustand";
 
 function GLBModel({url, animationName, playOnce, click, name, ...props}) {
     // 存放所有模型引用方便管理.
-    const {addModel, addAnimation} = useBearStore((state) => state.addModel);
+    const {addModel, addAnimation} = useBearStore((state) => state);
     // 存放所有动画引用方便管理.
     // const addAnimation = useBearStore();
     const {scene, animations} = useGLTF(url); // 使用 useGLTF 加载 .glb 模型
@@ -40,6 +40,7 @@ function GLBModel({url, animationName, playOnce, click, name, ...props}) {
         // 播放一次且停留在最后一帧.
         if (playOnce) {
             // console.log('播放一次');
+            action?.getMixer().stopAllAction();
             action?.setLoop(THREE.LoopOnce, 1);
             action!.clampWhenFinished = true;
             // mixer.addEventListener('finished', () => {
