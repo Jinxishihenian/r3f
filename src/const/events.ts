@@ -26,7 +26,7 @@ const ActionMap = {
     AN_SYB: "点击-按钮(设置输液泵参数)",
     SYB_DJ2: "点击-输液泵(打开调节器)",
     SYB_KP: "点击-快排",
-    AN_QR9: "点击-按钮(快排)",
+    AN_QR9: "点击-按钮(快排,在此步骤假设将输液泵还原到桌子上)",
     DZP_DJ1: "点击-电子屏",
     AN_QR10: "点击-电子屏(确认)",
     WD_Dj1: "点击-腕带(核对输液单信息)",
@@ -47,82 +47,82 @@ const ActionMap = {
 }
 
 // 行为描述.
-const BehaviorMap = {
-    // 固定输液器.
-    1: {
-        '1-1': [ActionMap.SYB_SQ, ActionMap.SYB_FZ1],
-    },
-    // 排气.
-    2: {
-        '2-1': [ActionMap.SYQ_Dj1, ActionMap.ANT_QR1, ActionMap.ANT_QR2, ActionMap.AN_QR3],
-    },
-    // 固定输液器.
-    3: {
-        '3-1': [ActionMap.SYQ_DJ2, ActionMap.AN_QR4],
-    },
-    // 消毒留置针正压接口.
-    4: {
-        '4-1': [ActionMap.LZZ_CK1, ActionMap.AN_QR5],
-        '4-2': [ActionMap.MQ_SQ, ActionMap.JED_ZQ, ActionMap.AN_QR6],
-    },
-    // 评估留置针.
-    5: {
-        '5-1': [
-            ActionMap.LZZ_CK2,
-            ActionMap.AN_QR7,
-        ],
-        '5-2': [
-            ActionMap.SYQ_SQ,
-            ActionMap.LZZ_LJ,
-            ActionMap.AN_QR8,
-        ],
-    },
-    // 设置输液泵参数并排气.
-    6: {
-        '6-1': [
-            ActionMap.SYB_DJ1,
-            ActionMap.SYB_YZ,
-            ActionMap.SYB_DS,
-            ActionMap.AN_SYB,
-        ],
-        '6-2': [
-            ActionMap.SYB_DJ2,
-            ActionMap.SYB_KP,
-            ActionMap.AN_QR9,
-        ],
-    },
-    // 操作中核对患者信息.
-    7: {
-        '7-1': [
-            ActionMap.DZP_DJ1,
-            ActionMap.AN_QR10,
-            ActionMap.WD_Dj1,
-            ActionMap.AN_QR11,
-            ActionMap.DH_SJ,
-            ActionMap.AN_DH,
-            ActionMap.SYD_DJ,
-            ActionMap.AN_QR,
-        ],
-    },
-    // 开始输液.
-    8: {
-        '8-1': [
-            ActionMap.SYQ_DJ3,
-            ActionMap.LZZ_CK3,
-            ActionMap.AN_QR12,
-
-        ],
-        '8-2': [
-            ActionMap.HSB_SQ,
-            ActionMap.SYB_DJ3,
-            ActionMap.SYB_TZ,
-            ActionMap.AN_QR13,
-        ],
-        '8-3': [
-            ActionMap.LZZ_CK4,
-            ActionMap.AN_QR14,
-        ],
-    }
-}
+// const BehaviorMap = {
+//     // 固定输液器.
+//     1: {
+//         '1-1': [ActionMap.SYB_SQ, ActionMap.SYB_FZ1],
+//     },
+//     // 排气.
+//     2: {
+//         '2-1': [ActionMap.SYQ_Dj1, ActionMap.ANT_QR1, ActionMap.ANT_QR2, ActionMap.AN_QR3],
+//     },
+//     // 固定输液器.
+//     3: {
+//         '3-1': [ActionMap.SYQ_DJ2, ActionMap.AN_QR4],
+//     },
+//     // 消毒留置针正压接口.
+//     4: {
+//         '4-1': [ActionMap.LZZ_CK1, ActionMap.AN_QR5],
+//         '4-2': [ActionMap.MQ_SQ, ActionMap.JED_ZQ, ActionMap.AN_QR6],
+//     },
+//     // 评估留置针.
+//     5: {
+//         '5-1': [
+//             ActionMap.LZZ_CK2,
+//             ActionMap.AN_QR7,
+//         ],
+//         '5-2': [
+//             ActionMap.SYQ_SQ,
+//             ActionMap.LZZ_LJ,
+//             ActionMap.AN_QR8,
+//         ],
+//     },
+//     // 设置输液泵参数并排气.
+//     6: {
+//         '6-1': [
+//             ActionMap.SYB_DJ1,
+//             ActionMap.SYB_YZ,
+//             ActionMap.SYB_DS,
+//             ActionMap.AN_SYB,
+//         ],
+//         '6-2': [
+//             ActionMap.SYB_DJ2,
+//             ActionMap.SYB_KP,
+//             ActionMap.AN_QR9,
+//         ],
+//     },
+//     // 操作中核对患者信息.
+//     7: {
+//         '7-1': [
+//             ActionMap.DZP_DJ1,
+//             ActionMap.AN_QR10,
+//             ActionMap.WD_Dj1,
+//             ActionMap.AN_QR11,
+//             ActionMap.DH_SJ,
+//             ActionMap.AN_DH,
+//             ActionMap.SYD_DJ,
+//             ActionMap.AN_QR,
+//         ],
+//     },
+//     // 开始输液.
+//     8: {
+//         '8-1': [
+//             ActionMap.SYQ_DJ3,
+//             ActionMap.LZZ_CK3,
+//             ActionMap.AN_QR12,
+//
+//         ],
+//         '8-2': [
+//             ActionMap.HSB_SQ,
+//             ActionMap.SYB_DJ3,
+//             ActionMap.SYB_TZ,
+//             ActionMap.AN_QR13,
+//         ],
+//         '8-3': [
+//             ActionMap.LZZ_CK4,
+//             ActionMap.AN_QR14,
+//         ],
+//     }
+// }
 
 export {ActionMap};

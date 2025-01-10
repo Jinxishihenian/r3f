@@ -138,7 +138,49 @@ const EventMapMovie = {
                 },
             },
         },
-    ]
+    ],
+    // 步骤3.
+    [ActionMap.SYQ_DJ2]: [],
+    [ActionMap.AN_QR4]: [],
+    // 步骤4.
+    [ActionMap.LZZ_CK1]: [],
+    [ActionMap.AN_QR5]: [],
+    [ActionMap.MQ_SQ]: [],
+    [ActionMap.JED_ZQ]: [],
+    [ActionMap.AN_QR6]: [],
+    // 步骤5.
+    [ActionMap.LZZ_CK2]: [],
+    [ActionMap.AN_QR7]: [],
+    [ActionMap.SYQ_SQ]: [],
+    [ActionMap.LZZ_LJ]: [],
+    [ActionMap.AN_QR8]: [],
+    // 步骤6.
+    [ActionMap.SYB_DJ1]: [],
+    [ActionMap.SYB_YZ]: [],
+    [ActionMap.SYB_DS]: [],
+    [ActionMap.AN_SYB]: [],
+    [ActionMap.SYB_DJ2]: [],
+    [ActionMap.SYB_KP]: [],
+    [ActionMap.AN_QR9]: [],
+    // 步骤7.
+    [ActionMap.DZP_DJ1]: [],
+    [ActionMap.AN_QR10]: [],
+    [ActionMap.WD_Dj1]: [],
+    [ActionMap.AN_QR11]: [],
+    [ActionMap.DH_SJ]: [],
+    [ActionMap.AN_DH]: [],
+    [ActionMap.SYD_DJ]: [],
+    [ActionMap.AN_QR]: [],
+    // 步骤8.
+    [ActionMap.SYQ_DJ3]: [],
+    [ActionMap.LZZ_CK3]: [],
+    [ActionMap.AN_QR12]: [],
+    [ActionMap.HSB_SQ]: [],
+    [ActionMap.SYB_DJ3]: [],
+    [ActionMap.SYB_TZ]: [],
+    [ActionMap.AN_QR13]: [],
+    [ActionMap.LZZ_CK4]: [],
+    [ActionMap.AN_QR14]: [],
 };
 
 export {EventMapMovie, MovieType}
