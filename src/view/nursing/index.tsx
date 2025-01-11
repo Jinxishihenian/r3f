@@ -27,17 +27,17 @@ function Nursing() {
     const globalActorRef = GlobalMachineContext.useActorRef();
     const cameraControlRef = useRef<CameraControls | null>(null);
     const draggable = GlobalMachineContext.useSelector((state) => state?.context?.draggable);
-    const bears = useBearStore((state) => state.bears);
-    const increasePopulation = useBearStore((state) => state.increasePopulation)
-    const models = useBearStore((state) => state.models);
+    // const bears = useBearStore((state) => state.bears);
+    // const increasePopulation = useBearStore((state) => state.increasePopulation)
+    // const models = useBearStore((state) => state.models);
     const {play} = useMovie();
     // 操作器(双手).
-    const hand = useState({
-        // 手中是否有东西.
-        // 当前手中物品.
-    });
+    // const hand = useState({
+    // 手中是否有东西.
+    // 当前手中物品.
+    // });
     // 相机轨道器是否启用.
-    const [orbitControlsEnabled, setOrbitControlsEnabled] = useState(true);
+    // const [orbitControlsEnabled, setOrbitControlsEnabled] = useState(true);
 
     useEffect(() => {
         if (!lock) {
@@ -46,7 +46,7 @@ function Nursing() {
             // eventQueue.start();
             // 步骤启动.
             startStep(0);
-
+            // 表现层.
             eventQueue.onComplete(async (event) => {
                 if (eventQueue.currentIndex >= eventQueue.queue.length) {
                     console.log('当前步骤完成~~~');
@@ -206,10 +206,10 @@ function Nursing() {
                             // eventManager.emit(ActionMap.AN_QR7);
                             // eventManager.emit(ActionMap.AN_DH);
                             // 阻止冒泡.
-                            eventManager.emit("confirmAction", "confirmAction");
+                            // eventManager.emit("confirmAction", "confirmAction");
                             // eventManager.emit("ObjectB");
                             // eventManager.emit("confirmAction");
-                            e.stopPropagation();
+                            // e.stopPropagation();
                         }}
                         // position={[-6, 0, 0]}
                     />
@@ -229,9 +229,9 @@ function Nursing() {
                             // 阻止冒泡.
 
                             // eventManager.emit("confirmAction");
-                            eventManager.emit("clickObjectB", "clickObjectB");
+                            // eventManager.emit("clickObjectB", "clickObjectB");
                             // eventManager.emit("clickObjectA", "clickObjectA");
-                            e.stopPropagation();
+                            // e.stopPropagation();
                         }}
                     />
                     {/*输液泵动画*/}
@@ -255,11 +255,11 @@ function Nursing() {
                             // eventManager.emit("clickObjectB", "clickObjectB");
                             // eventManager.emit("confirmAction", "confirmAction");
                             // eventManager.emit("clickObjectB", "clickObjectB");
-                            eventManager.emit("clickObjectA", "clickObjectA");
+                            // eventManager.emit("clickObjectA", "clickObjectA");
                             // eventQueue.processNext();
                             // eventManager.emit("ObjectB");
                             // eventManager.emit("confirmAction");
-                            e.stopPropagation();
+                            // e.stopPropagation();
                         }}
 
                         // position={[-6, 0, 0]}

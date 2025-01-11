@@ -17,10 +17,12 @@ enum MovieType {
     // 点击拾取.
     CLICK_PICKUP,
     // 位移(跳步部分).
-    // TRANSFIGURATION
+    //(TRANSFIGURATION)
     MOVE,
     // 模型动画(跳步部分).
     MODEL_ANIMATION,
+    // 模型动画与变形同步进行.
+
     // 镜头动画.
     CAMERA_ANIMATION,
     // 镜头还原动画.
@@ -140,20 +142,108 @@ const EventMapMovie = {
         },
     ],
     // 步骤3.
-    [ActionMap.SYQ_DJ2]: [],
-    [ActionMap.AN_QR4]: [],
+    [ActionMap.SYQ_DJ2]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR4]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.WAIBAOZ2,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
     // 步骤4.
-    [ActionMap.LZZ_CK1]: [],
-    [ActionMap.AN_QR5]: [],
-    [ActionMap.MQ_SQ]: [],
-    [ActionMap.JED_ZQ]: [],
-    [ActionMap.AN_QR6]: [],
+    [ActionMap.LZZ_CK1]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR5]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.DKLZZ,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
+    [ActionMap.MQ_SQ]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.JED_ZQ]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR6]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.MFQXD,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
     // 步骤5.
-    [ActionMap.LZZ_CK2]: [],
-    [ActionMap.AN_QR7]: [],
-    [ActionMap.SYQ_SQ]: [],
-    [ActionMap.LZZ_LJ]: [],
-    [ActionMap.AN_QR8]: [],
+    [ActionMap.LZZ_CK2]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR7]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.SYQ_SQ]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.LZZ_LJ]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.LJSYQ,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
+    [ActionMap.AN_QR8]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
     // 步骤6.
     [ActionMap.SYB_DJ1]: [],
     [ActionMap.SYB_YZ]: [],

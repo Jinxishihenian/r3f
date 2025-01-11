@@ -39,8 +39,12 @@ const useMovie = () => {
     const play = async (eventName) => {
         // console.log('影视播放')
         // console.log(movies);
+        console.log('触发事件')
+        console.log(eventName)
         // 影视.
         const movieDescribes = EventMapMovie[eventName];
+        // console.log('影视层');
+        // console.log(movieDescribes);
         // if (movieDescribes) {
         //     console.log('没有对应影视');
         // }
@@ -48,7 +52,7 @@ const useMovie = () => {
         // 可能存在异步.
         for (const describe of movieDescribes) {
             // 播放.
-            await movieActive(describe, models);
+            await movieActive(describe);
         }
         // } catch (e) {
         //     console.log('甭播放了嗷');
@@ -56,10 +60,12 @@ const useMovie = () => {
 
     };
 
-    const movieActive = async (describe, models) => {
+    const movieActive = async (describe) => {
         // console.log('激活影视');
         // console.log(describe)
         // console.log(modelsRef.current)
+        console.log('==描述==');
+        console.log(describe)
         // TODO 此方法需要剥离.
         switch (describe.movieType) {
             case MovieType.CLICK_PICKUP:
@@ -78,6 +84,8 @@ const useMovie = () => {
                 console.log(describe.parameters.name);
                 const animations = animationsRef.current[describe.parameters.name];
                 if (animations) {
+                    console.log('1播放动画1');
+                    console.log(describe.parameters.sceneState.objectStates.animation)
                     const action = animations[describe.parameters.sceneState.objectStates.animation];
                     action?.getMixer().stopAllAction();
                     // console.log('开始播放');
