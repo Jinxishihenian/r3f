@@ -28,24 +28,6 @@ function Gui() {
     }, []);
     return (
         <div className={styles.main}>
-            <List
-                header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
-                // footer={<div>Footer</div>}
-                bordered
-                dataSource={data}
-                renderItem={(item: string) => (
-                    <List.Item
-                        onClick={() => {
-                            // console.log('假设完成');
-                            globalActorRef.send({type: 'COMPLETE'});
-                        }}
-                    >
-                        <p>{item}</p>
-                        {/*<p>{eventQueue.queue[eventQueue.currentIndex]}</p>*/}
-                    </List.Item>
-                )}
-            />
-            <div style={{color: "red"}}>请操作：{hint}</div>
             <Button
                 type="primary"
                 onClick={() => {
@@ -67,6 +49,70 @@ function Gui() {
             >
                 万能按钮(模拟各种操作)
             </Button>
+            <List
+                header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
+                // footer={<div>Footer</div>}
+                bordered
+                dataSource={data}
+                renderItem={(item: string) => (
+                    <List.Item
+                        onClick={() => {
+                            // console.log('假设完成');
+                            globalActorRef.send({type: 'COMPLETE'});
+                        }}
+                    >
+                        <p>{item}</p>
+                        {/*<p>{eventQueue.queue[eventQueue.currentIndex]}</p>*/}
+                    </List.Item>
+                )}
+            />
+            <div style={{color: "red"}}>请操作：{hint}</div>
+
+            <div>历史记录(用于跳步)</div>
+            <div>
+                {
+                    Object.values(step).map((item) => {
+                        // return <p>{item}</p>
+                        // console.log('==item==')
+                        // console.log(item)
+                        // console.log()
+                        const {children} = item;
+                        console.log('11step11');
+                        console.log(children)
+                        // console.log('==children==');
+                        // console.log(children);
+                        // Object.values(children).map((item) => {
+                        //     // console.log('ittt')
+                        //     // console.log(item);
+                        //     console.log(item)
+                        // })
+                        return (
+                            <div>
+                                {/*<h1>{}</h1>*/}
+                                <ul>
+                                    {
+                                        Object.values(children).map((item) => {
+                                            const {events} = item;
+                                            return (
+                                                <li
+                                                    key={events}
+                                                    style={{fontSize: 12}}
+                                                    onClick={() => {
+                                                        console.log('==点击内容==');
+                                                        console.log(item)
+                                                    }}
+                                                >
+                                                    {events.join(',')}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     );
 }

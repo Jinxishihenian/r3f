@@ -245,13 +245,42 @@ const EventMapMovie = {
         {movieType: MovieType.CLICK_PICKUP},
     ],
     // 步骤6.
-    [ActionMap.SYB_DJ1]: [],
-    [ActionMap.SYB_YZ]: [],
-    [ActionMap.SYB_DS]: [],
-    [ActionMap.AN_SYB]: [],
-    [ActionMap.SYB_DJ2]: [],
-    [ActionMap.SYB_KP]: [],
-    [ActionMap.AN_QR9]: [],
+    [ActionMap.SYB_DJ1]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.SYB_YZ]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.SYB_DS]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_SYB]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.SYB_DJ2]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.SYB_KP]: [
+        {movieType: MovieType.CLICK_PICKUP},
+    ],
+    [ActionMap.AN_QR9]: [
+        {
+            movieType: MovieType.MOVE,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_JT.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        position: [-1.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
     // 步骤7.
     [ActionMap.DZP_DJ1]: [],
     [ActionMap.AN_QR10]: [],
@@ -264,10 +293,31 @@ const EventMapMovie = {
     // 步骤8.
     [ActionMap.SYQ_DJ3]: [],
     [ActionMap.LZZ_CK3]: [],
-    [ActionMap.AN_QR12]: [],
+    [ActionMap.AN_QR12]: [
+        {
+            movieType: MovieType.MODEL_ANIMATION,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_DH.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        animation: INFUSION_PUMPS.LJSYQZH,
+                        position: [0.5, 0.7, 1],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
+
     [ActionMap.HSB_SQ]: [],
     [ActionMap.SYB_DJ3]: [],
-    [ActionMap.SYB_TZ]: [],
+    [ActionMap.SYB_TZ]: [
+
+    ],
     [ActionMap.AN_QR13]: [],
     [ActionMap.LZZ_CK4]: [],
     [ActionMap.AN_QR14]: [],

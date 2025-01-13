@@ -13,6 +13,7 @@ const INFUSION_PUMPS = {
     DKLZZ: "3.1打开留置针止液夹打开胶布",
     MFQXD: "3.2棉签正压接头消毒",
     LJSYQ:"4.1连接5ml注射器和留置针",
+    LJSYQZH:"6.1连接输液器与留置针",
 }
 
 // 陪护动画.

@@ -31,8 +31,31 @@ const useMovie = () => {
     //     }
     // }, [models]);
 
+    // 场景过滤至相应节点.
+    const filtrate = () => {
+        // 过滤物品变形(位移，旋转，透明).
+        const arr2 = [
+            // 物品名称,为唯一关键key,保证唯一.
+            {
+                'name': {}
+            },
+        ];
+
+        // 过滤物品动画.
+        const arr1 = [
+            {
+                'name': {}
+            },
+        ];
+
+        // 拆分所有物品最终状态.
+        // 返回当前帧.
+        return [];
+    }
+
     // 还原场景信息(接收影视，还原场景).
-    const restore = () => {
+    const restore = (history) => {
+
     }
 
     // 播放.
