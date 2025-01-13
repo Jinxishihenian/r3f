@@ -5,6 +5,12 @@ import eventManager from "./emitter.ts";
 
 let currentStepIndex = 0;
 let currentBehaviorIndex = 0;
+const setCurrentStepIndex = (_currentStepIndex) => {
+    currentStepIndex = _currentStepIndex;
+}
+const setCurrentBehaviorIndex = (_currentStepIndex) => {
+    currentBehaviorIndex = _currentStepIndex;
+}
 // 结构.
 // const steps = [
 //     {
@@ -74,8 +80,12 @@ function startBehavior(behaviorIndex) {
     const behavior = step.behaviors[behaviorIndex];
     currentBehaviorIndex = behaviorIndex;
     // console.log(`开始行为：${behavior.id}`);
+    // eventQueue.currentIndex = 0;
+    // eventQueue.queue = [];
     // 初始化事件队列
     eventQueue.initialize(behavior.events);
+    console.log('===currentIndex===');
+    console.log(eventQueue.currentIndex);
     // 所有的事件产生的视觉效果将会在这里完成.
     // eventQueue.onComplete((event) => {
     //     console.log(`丑陋的把戏:${event}`);
@@ -125,4 +135,4 @@ function startBehavior(behaviorIndex) {
     };
 }
 
-export {startStep, steps};
+export {startStep, startBehavior, steps, setCurrentStepIndex, setCurrentBehaviorIndex};

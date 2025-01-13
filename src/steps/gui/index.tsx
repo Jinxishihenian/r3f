@@ -2,7 +2,13 @@ import styles from './index.module.css';
 import {Button, List} from 'antd';
 import {GlobalMachineContext, StepsStatus} from "../../machine";
 import {useEffect, useState} from "react";
-import {steps} from "../../event";
+import {
+    setCurrentBehaviorIndex,
+    setCurrentStepIndex,
+    startBehavior,
+    startStep,
+    steps
+} from "../../event";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 // import {eventManager, eventQueue} from "../../event/queue.ts";
@@ -15,6 +21,8 @@ function Gui() {
     // const index = GlobalMachineContext.useSelector((state) => state?.context?.index);
     const globalActorRef = GlobalMachineContext.useActorRef();
     // const running = step.filter((item: any) => true);
+    const listSet = () => {
+    }
     useEffect(() => {
         // 将进行中的过滤出来.
         globalActorRef.subscribe((event) => {
@@ -44,6 +52,9 @@ function Gui() {
                     clickEvents1.forEach((item) => {
                         eventManager.emit(item, item);
                     });
+                    console.log('索引');
+                    console.log(eventQueue.currentIndex);
+                    console.log(eventQueue.queue);
                     setHint(eventQueue.queue[eventQueue.currentIndex])
                 }}
             >
@@ -71,14 +82,17 @@ function Gui() {
             <div>历史记录(用于跳步)</div>
             <div>
                 {
-                    Object.values(step).map((item) => {
+                    // Object.values(step).map((item) => {
+                    Object.keys(step).map((itemF) => {
                         // return <p>{item}</p>
                         // console.log('==item==')
                         // console.log(item)
                         // console.log()
-                        const {children} = item;
-                        console.log('11step11');
-                        console.log(children)
+                        // console.log('==item==')
+                        // console.log(itemF)
+                        const {children} = step[itemF];
+                        // console.log('11step11');
+                        // console.log(children)
                         // console.log('==children==');
                         // console.log(children);
                         // Object.values(children).map((item) => {
@@ -87,19 +101,32 @@ function Gui() {
                         //     console.log(item)
                         // })
                         return (
-                            <div>
+                            <div key={itemF}>
                                 {/*<h1>{}</h1>*/}
                                 <ul>
                                     {
-                                        Object.values(children).map((item) => {
-                                            const {events} = item;
+                                        Object.keys(children).map((item) => {
+                                            const {events} = children[item];
                                             return (
                                                 <li
-                                                    key={events}
-                                                    style={{fontSize: 12}}
+                                                    key={events.toString()}
+                                                    style={{
+                                                        fontSize: 12,
+                                                        maxWidth: 300,
+                                                        color: 'blue',
+                                                        userSelect: "none",
+                                                    }}
                                                     onClick={() => {
-                                                        console.log('==点击内容==');
-                                                        console.log(item)
+                                                        // console.log('==事件队列==');
+                                                        // console.log(Number(itemF) - 1)
+                                                        // startStep(Number(itemF) - 1);
+                                                        console.log('步骤');
+                                                        setCurrentStepIndex(Number(itemF) - 1);
+                                                        setCurrentBehaviorIndex(0);
+                                                        startBehavior(0);
+                                                        // startBehavior(Number(itemF) - 1);
+                                                        // startStep(0);
+                                                        globalActorRef.send({type: 'JUMP_STEP', payload: itemF});
                                                     }}
                                                 >
                                                     {events.join(',')}

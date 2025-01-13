@@ -112,8 +112,8 @@ function Nursing() {
     //     }
     // }, [models]);
 
-    const player = (pamams) => {
-    }
+    // const player = (pamams) => {
+    // }
     // 病房场景搭建.
     return (
         <div className={styles.main}>

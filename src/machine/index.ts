@@ -285,6 +285,43 @@ const machine = setup({
                     context: (context, event) => {
                     }
                 }),
+                // 跳步骤.
+                JUMP_STEP: {
+                    actions: assign({
+                        info: ({context, event}) => {
+                            // console.log('跳步骤');
+                            // console.log(event);
+
+                            // 1.将所有进行中的步骤设置为未开始.
+                            //    -判断步骤中是否有进行中的行为.
+                            //    -将行为设置为未开始.
+                            const {info: context1} = context;
+                            for (const stepId in context1.step) {
+                                const step = context1.step[stepId];
+                                if (step.stepsStatus === StepsStatus.Running) {
+                                    // 此步骤相当于回退.
+                                    step.stepsStatus = StepsStatus.UnStart;
+                                }
+
+                                if (stepId == event.payload) {
+                                    console.log('================================跳的目标值');
+                                    step.stepsStatus = StepsStatus.Running;
+                                }
+                                // console.log('stepId')
+                                // console.log(stepId)
+                            }
+                            // 2.将当前步骤设置为进行中.
+                            console.log('event')
+                            console.log(`${event.payload}-1`);
+                            return {
+                                step: context1.step,
+                                currentStepId: event.payload, // 当前激活的步骤
+                                // currentSubTaskId: context1.currentSubTaskId, // 当前运行的行为.
+                                currentSubTaskId: `${event.payload}-1`, // 当前运行的行为.
+                            }
+                        }
+                    }),
+                },
                 // 启用物品拖拽.
                 START_DRAG: {
                     actions: assign({

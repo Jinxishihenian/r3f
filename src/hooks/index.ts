@@ -17,9 +17,9 @@ const useMovie = () => {
     useEffect(() => {
         modelsRef.current = models;
         animationsRef.current = animations;
-        console.log()
-        console.log('==动画==')
-        console.log(animations)
+        // console.log()
+        // console.log('==动画==')
+        // console.log(animations)
     }, [models, animations]);
     // 根据影视开始进行播放.
     // useEffect(() => {

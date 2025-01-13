@@ -50,6 +50,8 @@ class EventQueue {
         console.log(`事件完成(移除)：${event}`);
         // eventManager.removeListener(event, this.handleEventComplete.bind(this)); // 移除监听
         eventManager.removeListener(event); // 移除监听
+        console.log('==如果大海能够==');
+        console.log(this.currentIndex)
         this.currentIndex++; // 处理下一个事件
         // 如果设置了回调，调用它
         if (this.onCompleteCallback) {
