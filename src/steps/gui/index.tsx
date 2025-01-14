@@ -133,15 +133,40 @@ function Gui() {
                                     }}
                                     onClick={() => {
                                         // 跳步逻辑.
+                                        const stepIndex = Number(itemF);
                                         // 事件恢复.
-                                        setCurrentStepIndex(Number(itemF) - 1);
+                                        setCurrentStepIndex(stepIndex - 1);
                                         setCurrentBehaviorIndex(0);
                                         startBehavior(0);
                                         globalActorRef.send({type: 'JUMP_STEP', payload: itemF});
                                         // 场景恢复逻辑.
                                         // 获取所有事件.
+                                        // const events = step.map((item) => {
+                                        //     {children,stepsStatus} = item;
+                                        // });
+                                        console.log(stepIndex);
+                                        const events = Object.keys(step).filter((item) => {
+                                            // console.log('索引')
+                                            // console.log(Number(item))
+                                            const index = Number(item);
+                                            return index < stepIndex;
+                                        }).map((item) => {
+                                            // console.log('==循环2==');
+                                            // console.log(item)
+                                            // const { children } = item;
+                                            const {children} = step[item];
+                                            const events = Object.values(children).map((item) => {
+                                                const {events} = item;
+                                                return events;
+                                            });
+                                            return events.flat();
+                                        }).flat();
+                                        console.log('所有事件');
+                                        console.log(events);
                                         // 根据事件获取所有命令.
+
                                         // 过滤与场景有关的命令.
+
                                         // N个数组用来描述状态.
                                         // 两个维度(物品,状态).
                                         //    - 以变形为核心.
