@@ -304,7 +304,7 @@ const machine = setup({
                                 }
 
                                 if (stepId == event.payload) {
-                                    console.log('================================跳的目标值');
+                                    // console.log('================================跳的目标值');
                                     step.stepsStatus = StepsStatus.Running;
                                 }
                                 // console.log('stepId')
@@ -326,15 +326,15 @@ const machine = setup({
                 START_DRAG: {
                     actions: assign({
                         draggable: ({context, event}) => {
-                            console.log('===测试===');
-                            console.log(context)
-                            console.log(event)
+                            // console.log('===测试===');
+                            // console.log(context)
+                            // console.log(event)
                             return true;
                         },
                         player: ({context, event}) => {
-                            console.log('===测试===');
-                            console.log(context)
-                            console.log(event)
+                            // console.log('===测试===');
+                            // console.log(context)
+                            // console.log(event)
                             return {
                                 hand: {
                                     // 手中是否有物品.

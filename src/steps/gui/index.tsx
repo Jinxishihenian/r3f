@@ -11,22 +11,22 @@ import {
 } from "../../event";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
-// import {eventManager, eventQueue} from "../../event/queue.ts";
+import useMovie from "../../hooks";
 
 // 步骤列表视图.
 function Gui() {
     const [data, setDate] = useState([]);
     const [hint, setHint] = useState(eventQueue.queue[eventQueue.currentIndex]);
     const {step, currentStepId, currentSubTaskId} = GlobalMachineContext.useSelector((state) => state?.context?.info);
-    // const index = GlobalMachineContext.useSelector((state) => state?.context?.index);
     const globalActorRef = GlobalMachineContext.useActorRef();
-    // const running = step.filter((item: any) => true);
     const listSet = () => {
     }
+    // 用于恢复场景.
+    const {play} = useMovie();
     useEffect(() => {
         // 将进行中的过滤出来.
         globalActorRef.subscribe((event) => {
-            console.log('subscribe1');
+            // console.log('subscribe1');
             const running = Object.values(step).filter((item: any) => {
                 return item.stepsStatus == StepsStatus.Running;
             });
@@ -34,6 +34,12 @@ function Gui() {
             setDate(list);
         });
     }, []);
+
+    useEffect(() => {
+        console.log('监听eventQueue.currentIndex,eventQueue.queue变化');
+        console.log(eventQueue.queue[eventQueue.currentIndex]);
+        setHint(eventQueue.queue[eventQueue.currentIndex])
+    }, [eventQueue.queue[eventQueue.currentIndex]]);
     return (
         <div className={styles.main}>
             <Button
@@ -52,34 +58,50 @@ function Gui() {
                     clickEvents1.forEach((item) => {
                         eventManager.emit(item, item);
                     });
-                    console.log('索引');
-                    console.log(eventQueue.currentIndex);
-                    console.log(eventQueue.queue);
                     setHint(eventQueue.queue[eventQueue.currentIndex])
                 }}
             >
                 万能按钮(模拟各种操作)
             </Button>
-            <List
-                header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
-                // footer={<div>Footer</div>}
-                bordered
-                dataSource={data}
-                renderItem={(item: string) => (
-                    <List.Item
-                        onClick={() => {
-                            // console.log('假设完成');
-                            globalActorRef.send({type: 'COMPLETE'});
-                        }}
-                    >
-                        <p>{item}</p>
-                        {/*<p>{eventQueue.queue[eventQueue.currentIndex]}</p>*/}
-                    </List.Item>
-                )}
-            />
-            <div style={{color: "red"}}>请操作：{hint}</div>
+            <div style={{minHeight: '200px'}}>
+                <List
+                    header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
+                    // footer={<div>Footer</div>}
+                    bordered
+                    dataSource={data}
+                    renderItem={(item: string) => (
+                        <List.Item
+                            onClick={() => {
+                                // console.log('假设完成');
+                                // globalActorRef.send({type: 'COMPLETE'});
+                            }}
+                        >
+                            <p>{
+                                item.split(' || ').map((item) => {
+                                    // console.log('列表更新');
+                                    if (item == hint) {
+                                        return <span key={item} style={{color: 'green', margin: '0 4px'}}>{item}</span>
+                                    }
+                                    return <span key={item} style={{color: 'black', margin: '0 4px'}}>{item}</span>
+                                })
+                            }</p>
 
-            <div>历史记录(用于跳步)</div>
+                            {/*{*/}
+                            {/*    events.map((item) => {*/}
+                            {/*        if (item == hint) {*/}
+                            {/*            return <span style={{color: 'red'}}>item</span>*/}
+                            {/*        }*/}
+                            {/*        return <span>{item}</span>*/}
+                            {/*    })*/}
+                            {/*}*/}
+                            {/*<p>{eventQueue.queue[eventQueue.currentIndex]}</p>*/}
+                        </List.Item>
+                    )}
+                />
+            </div>
+
+            <div style={{color: "green"}}>请操作：{hint}</div>
+            <h3>历史记录(用于跳步)</h3>
             <div>
                 {
                     // Object.values(step).map((item) => {
@@ -90,7 +112,7 @@ function Gui() {
                         // console.log()
                         // console.log('==item==')
                         // console.log(itemF)
-                        const {children} = step[itemF];
+                        const {children, stepsStatus} = step[itemF];
                         // console.log('11step11');
                         // console.log(children)
                         // console.log('==children==');
@@ -102,8 +124,32 @@ function Gui() {
                         // })
                         return (
                             <div key={itemF}>
-                                {/*<h1>{}</h1>*/}
-                                <ul>
+                                <span>步骤{itemF}</span>
+                                <ul
+                                    style={{
+                                        padding: '2px 8px',
+                                        margin: '0',
+                                        background: stepsStatus == StepsStatus.Running ? 'white' : "transparent"
+                                    }}
+                                    onClick={() => {
+                                        // 跳步逻辑.
+                                        // 事件恢复.
+                                        setCurrentStepIndex(Number(itemF) - 1);
+                                        setCurrentBehaviorIndex(0);
+                                        startBehavior(0);
+                                        globalActorRef.send({type: 'JUMP_STEP', payload: itemF});
+                                        // 场景恢复逻辑.
+                                        // 获取所有事件.
+                                        // 根据事件获取所有命令.
+                                        // 过滤与场景有关的命令.
+                                        // N个数组用来描述状态.
+                                        // 两个维度(物品,状态).
+                                        //    - 以变形为核心.
+                                        //    - 以动画为核心.
+                                        // 经过渲染层还原场景.
+
+                                    }}
+                                >
                                     {
                                         Object.keys(children).map((item) => {
                                             const {events} = children[item];
@@ -113,21 +159,10 @@ function Gui() {
                                                     style={{
                                                         fontSize: 12,
                                                         maxWidth: 300,
-                                                        color: 'blue',
+                                                        color: 'black',
                                                         userSelect: "none",
                                                     }}
-                                                    onClick={() => {
-                                                        // console.log('==事件队列==');
-                                                        // console.log(Number(itemF) - 1)
-                                                        // startStep(Number(itemF) - 1);
-                                                        console.log('步骤');
-                                                        setCurrentStepIndex(Number(itemF) - 1);
-                                                        setCurrentBehaviorIndex(0);
-                                                        startBehavior(0);
-                                                        // startBehavior(Number(itemF) - 1);
-                                                        // startStep(0);
-                                                        globalActorRef.send({type: 'JUMP_STEP', payload: itemF});
-                                                    }}
+
                                                 >
                                                     {events.join(',')}
                                                 </li>

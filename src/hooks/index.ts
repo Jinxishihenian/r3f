@@ -48,8 +48,29 @@ const useMovie = () => {
             },
         ];
 
+        // 包含物品同时出现位移于动画场景.
+
         // 拆分所有物品最终状态.
         // 返回当前帧.
+        // 最终结果.
+        const mapT = [
+            {
+                '物品a': '最终变形',
+            },
+            {
+                '物品b': '最终变形',
+            },
+            // ...
+        ];
+        const mapA = [
+            {
+                '物品a': '最终动画',
+            },
+            {
+                '物品b': '最终动画',
+            },
+            // ...
+        ];
         return [];
     }
 
@@ -87,8 +108,8 @@ const useMovie = () => {
         // console.log('激活影视');
         // console.log(describe)
         // console.log(modelsRef.current)
-        console.log('==描述==');
-        console.log(describe)
+        // console.log('==描述==');
+        // console.log(describe)
         // TODO 此方法需要剥离.
         switch (describe.movieType) {
             case MovieType.CLICK_PICKUP:

@@ -1,5 +1,6 @@
 import eventManager from "./emitter.ts";
 
+// 事件队列.
 class EventQueue {
     queue: any[];
     currentIndex: number;
@@ -23,11 +24,15 @@ class EventQueue {
         this.queue = events;
         this.currentIndex = 0;
         this.isProcessing = false;
+        // 初始化事件管理程序.
+        eventManager.eventNames().forEach((item) => {
+            eventManager.removeListener(item);
+        });
     }
 
     // 处理队列中的下一个事件
     processNext(): any {
-
+        console.log('processNext本身的方法调用');
         if (this.currentIndex >= this.queue.length) {
             this.isProcessing = false;
             return true; // 队列完成
@@ -36,7 +41,7 @@ class EventQueue {
         const currentEvent = this.queue[this.currentIndex];
         console.log(`开始处理事件：${currentEvent}`);
         this.isProcessing = true;
-        // 监听当前事件的完成
+        // 注册事件.
         eventManager.on(currentEvent, this.handleEventComplete.bind(this));
         // console.log('==注册的事件==');
         // console.log(eventManager.eventNames())
@@ -47,11 +52,13 @@ class EventQueue {
 
     // 当事件完成时的回调
     handleEventComplete(event) {
-        console.log(`事件完成(移除)：${event}`);
+        console.log('handleEventComplete方法调用')
+        console.log(eventManager.eventNames())
+        // console.log(`事件完成(移除)：${event}`);
         // eventManager.removeListener(event, this.handleEventComplete.bind(this)); // 移除监听
         eventManager.removeListener(event); // 移除监听
-        console.log('==如果大海能够==');
-        console.log(this.currentIndex)
+        // console.log('==如果大海能够==');
+        // console.log(this.currentIndex)
         this.currentIndex++; // 处理下一个事件
         // 如果设置了回调，调用它
         if (this.onCompleteCallback) {
@@ -66,12 +73,11 @@ class EventQueue {
             console.log("事件队列为空");
             return;
         }
-        console.log('start')
+        // console.log('start')
         this.processNext();
     }
 }
 
 // 创建事件队列实例
 const eventQueue = new EventQueue();
-
 export default eventQueue;

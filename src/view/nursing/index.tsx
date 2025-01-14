@@ -6,17 +6,11 @@ import styles from './index.module.css';
 import GLBModel from "../../components/loader";
 import {INVALID, INFUSION_PUMPS} from "../../const/animation.ts";
 import Gui from "../../steps/gui";
-// import {ActionMap} from "../../const/events.ts";
-// import {eventQueue, eventManager} from "../../event/queue.ts";
-import {startStep, steps} from "../../event";
+import {startStep} from "../../event";
 import {GlobalMachineContext} from "../../machine";
-// import {play} from "../../movie";
-// import {Modal} from "antd";
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import Draggable from "../../components/draggable";
-// import {ActionMap} from "../../const/events.ts";
-import useBearStore from "../../zustand";
 import useMovie from "../../hooks";
 import Goods from "../../const/goods.ts";
 
@@ -30,7 +24,7 @@ function Nursing() {
     // const bears = useBearStore((state) => state.bears);
     // const increasePopulation = useBearStore((state) => state.increasePopulation)
     // const models = useBearStore((state) => state.models);
-    const {play} = useMovie();
+    const { play } = useMovie();
     // 操作器(双手).
     // const hand = useState({
     // 手中是否有东西.
@@ -49,7 +43,7 @@ function Nursing() {
             // 表现层.
             eventQueue.onComplete(async (event) => {
                 if (eventQueue.currentIndex >= eventQueue.queue.length) {
-                    console.log('当前步骤完成~~~');
+                    // console.log('当前步骤完成~~~');
                     globalActorRef.send({type: 'COMPLETE'});
                 }
                 // console.log('==事件==');
@@ -59,7 +53,7 @@ function Nursing() {
                 // console.log('==表现层==');
                 // console.log(models)
                 await play(event);
-                console.log('播放完成');
+                console.log('eventQueue.onComplete方法调用结束');
                 // 伪代码.
                 // alert(event);
                 // if (event) {
@@ -97,8 +91,8 @@ function Nursing() {
             lock = true;
         }
         globalActorRef.subscribe((e) => {
-            console.log('==监听变化==draggable');
-            console.log(draggable)
+            // console.log('==监听变化==draggable');
+            // console.log(draggable)
         });
     }, []);
 

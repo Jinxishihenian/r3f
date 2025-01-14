@@ -83,9 +83,12 @@ function startBehavior(behaviorIndex) {
     // eventQueue.currentIndex = 0;
     // eventQueue.queue = [];
     // 初始化事件队列
+    // console.log('==测试==');
+    // console.log(behaviorIndex);
+    // console.log(behavior)
     eventQueue.initialize(behavior.events);
-    console.log('===currentIndex===');
-    console.log(eventQueue.currentIndex);
+    // console.log('===currentIndex===');
+    // console.log(eventQueue.currentIndex);
     // 所有的事件产生的视觉效果将会在这里完成.
     // eventQueue.onComplete((event) => {
     //     console.log(`丑陋的把戏:${event}`);
@@ -104,16 +107,24 @@ function startBehavior(behaviorIndex) {
     eventQueue.start();
 
     // 队列完成时更新行为状态
+    // console.log('==异常值==');
+    // console.log(eventQueue)
     eventQueue.processNext = function () {
-        // console.log('processNext1');
+        console.log('processNext重置方法调用');
         // console.log(eventManager.eventNames())
+        // console.log('==processNext2==');
+        // console.log('==递归吧，兄弟们==')
+        // console.log(eventQueue.currentIndex)
+        // console.log(eventQueue.currentIndex >= eventQueue.queue.length);
 
         if (eventQueue.currentIndex >= eventQueue.queue.length) {
             // console.log(`行为完成：${behavior.id}===========`);
             if (behaviorIndex + 1 < step.behaviors.length) {
                 // console.log(`行为完成===${behaviorIndex}`);
+                // console.log('形成了递归1');
                 startBehavior(behaviorIndex + 1);
             } else {
+                // console.log('形成了递归2');
                 // 一个步骤.
                 // 步骤完成.
                 // console.log(`步骤完成：${step.id}===`);
@@ -128,6 +139,9 @@ function startBehavior(behaviorIndex) {
         } else {
             const currentEvent = eventQueue.queue[eventQueue.currentIndex];
             // console.log(`开始处理事件：${currentEvent}`);
+            // console.log('测试执行===');
+            console.log('==区分==');
+            console.log(eventQueue)
             eventManager.on(currentEvent, eventQueue.handleEventComplete.bind(eventQueue));
         }
         // console.log('==注册的事件==');
