@@ -13,6 +13,8 @@ import eventManager from "../../event/emitter.ts";
 import Draggable from "../../components/draggable";
 import useMovie from "../../hooks";
 import Goods from "../../const/goods.ts";
+import MouseFollower from "../../components/mouse";
+import MouseFollowerLayout from "../../components/mouse/index2.tsx";
 
 
 let lock = false;
@@ -24,7 +26,7 @@ function Nursing() {
     // const bears = useBearStore((state) => state.bears);
     // const increasePopulation = useBearStore((state) => state.increasePopulation)
     // const models = useBearStore((state) => state.models);
-    const { play } = useMovie();
+    const {play} = useMovie();
     // 操作器(双手).
     // const hand = useState({
     // 手中是否有东西.
@@ -259,10 +261,13 @@ function Nursing() {
                         // position={[-6, 0, 0]}
                     />
                 </group>
-
                 {/*HDR */}
                 <Environment files={'/qwantani_dusk_2_1k.hdr'}/>
+                <MouseFollowerLayout/>
             </Canvas>
+            {/*物品拾取层*/}
+            {/*<MouseFollower/>*/}
+
         </div>
     );
 }
