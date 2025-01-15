@@ -50,6 +50,24 @@ enum MovieType {
 // 事件映射影视.
 const EventMapMovie = {
     // 场景初始化.
+    [ActionMap.INIT]: [
+        {
+            movieType: MovieType.MOVE,
+            parameters: {
+                sessionId: "",
+                name: Goods.SYB_JT.name,
+                form: "",
+                to: "",
+                timestamp: "",
+                sceneState: {
+                    objectStates: {
+                        position: [1, 0.7315777257693641, 0.8779830113159199],
+                        rotation: [],
+                    }
+                },
+            },
+        },
+    ],
     // 缺少一个初始化.
     // 步骤1.
     [ActionMap.SYB_SQ]: [

@@ -4,6 +4,7 @@ import {EventMapMovie, MovieType} from "../movie";
 import {ActionMap} from "../const/events.ts";
 import {useEffect, useRef} from "react";
 import * as THREE from "three";
+import Goods from "../const/goods.ts";
 
 const useMovie = () => {
     // 所有需要操作的glb引用.
@@ -139,6 +140,11 @@ const useMovie = () => {
                     action?.setLoop(THREE.LoopOnce, 1);
                     action!.clampWhenFinished = true;
                     action.play();
+                    // setTimeout(() => {
+                    //     // 停止所有动画
+                    //     console.log('停止所有动画');
+                    //     action?.getMixer().stopAllAction();
+                    // }, 10000);
                 }
                 // console.log('播放排气动画');
                 // console.log(animations)
@@ -150,6 +156,23 @@ const useMovie = () => {
         }
     }
 
-    return {play, restore,movieActive};
+    // 动画还原到最终状态.
+    const restA = () => {
+        // models.forE
+        // Object.values(modelsRef.current).forEach((item) => {
+        //     console.log('item');
+        //     console.log(item)
+        // });
+        // 输液泵_动画
+        console.log('输液泵_动画');
+        console.log(modelsRef.current[Goods.SYB_DH.name])
+        // const mesh = modelsRef.current[Goods.SYB_DH.name];
+        // mesh.position.set(0, 0, 0);  // 恢复位置
+        // mesh.rotation.set(0, 0, 0);  // 恢复旋转
+        // mesh.scale.set(1, 1, 1);     // 恢复缩放
+
+    }
+
+    return {play, restore, movieActive, restA};
 }
 export default useMovie;

@@ -13,6 +13,7 @@ import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import useMovie from "../../hooks";
 import {EventMapMovie, MovieType} from "../../movie";
+import {ActionMap} from "../../const/events.ts";
 
 // 步骤列表视图.
 function Gui() {
@@ -23,7 +24,7 @@ function Gui() {
     const listSet = () => {
     }
     // 用于恢复场景.
-    const {play, movieActive} = useMovie();
+    const {play, movieActive, restA} = useMovie();
     useEffect(() => {
         // 将进行中的过滤出来.
         globalActorRef.subscribe((event) => {
@@ -163,6 +164,17 @@ function Gui() {
                                             return events.flat();
                                         }).flat();
                                         // 根据事件获取所有命令.
+                                        console.log('==events==');
+                                        console.log(events)
+                                        if (events.length <= 0) {
+                                            // 初始化.
+                                            EventMapMovie[ActionMap.INIT].forEach((item) => {
+                                                movieActive(item);
+                                            });
+                                            // console.log()
+                                            restA();
+                                            return;
+                                        }
                                         // 过滤与场景有关的命令.
                                         const movies = events.map((item) => {
                                             return EventMapMovie[item]
@@ -170,21 +182,19 @@ function Gui() {
                                             MovieType.MOVE,
                                             MovieType.MODEL_ANIMATION,
                                         ].includes(item.movieType));
-                                        console.log('所有事件');
-                                        console.log(events);
-                                        console.log('==所有影视==');
-                                        console.log(movies);
+                                        // console.log('所有事件');
+                                        // console.log(events);
+                                        // console.log('==所有影视==');
+                                        // console.log(movies);
                                         // N个数组用来描述状态.
                                         // 两个维度(物品,状态).
-                                        //    - 以变形为核心.
+                                        //    - 以变形为核心(位移,透明....).
                                         const moviesTransform = Object.values(movies.filter((item) => item.movieType == MovieType.MOVE).reduce((acc, item) => {
                                                 // 使用最后出现的记录覆盖前面的.
                                                 acc[item.parameters.name] = item;
                                                 return acc;
                                             }, {})
                                         );
-                                        // console.log('==唯一值==');
-                                        // console.log(moviesTransform)
                                         //    - 以动画为核心.
                                         const moviesAnimation = Object.values(movies.filter((item) => item.movieType == MovieType.MODEL_ANIMATION).reduce((acc, item) => {
                                                 // 使用最后出现的记录覆盖前面的.
@@ -192,12 +202,9 @@ function Gui() {
                                                 return acc;
                                             }, {})
                                         );
-                                        // 经过渲染层还原场景.
-                                        const result = [...moviesTransform, ...moviesAnimation];
-                                        // console.log('==result==')
                                         // 渲染结果层.
-                                        // console.log(result);
-                                        // play(movieActive);
+                                        const result = [...moviesTransform, ...moviesAnimation];
+                                        // 经过渲染层还原场景.
                                         result.forEach((item) => {
                                             movieActive(item);
                                         });
