@@ -181,6 +181,19 @@ const step: any = {
             },
             stepsStatus:
             StepsStatus.UnStart
+        },
+    "9":
+        {
+            children: {
+                "9-1": {
+                    behaviorStatus: BehaviorStatus.UnStart,
+                    events: [
+                        ActionMap.RY_DJ,
+                    ],
+                },
+            },
+            stepsStatus:
+            StepsStatus.UnStart
         }
 }
 

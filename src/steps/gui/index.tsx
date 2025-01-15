@@ -12,6 +12,7 @@ import {
 import eventQueue from "../../event/queue.ts";
 import eventManager from "../../event/emitter.ts";
 import useMovie from "../../hooks";
+import {EventMapMovie, MovieType} from "../../movie";
 
 // 步骤列表视图.
 function Gui() {
@@ -22,7 +23,7 @@ function Gui() {
     const listSet = () => {
     }
     // 用于恢复场景.
-    const {play} = useMovie();
+    const {play, movieActive} = useMovie();
     useEffect(() => {
         // 将进行中的过滤出来.
         globalActorRef.subscribe((event) => {
@@ -63,7 +64,7 @@ function Gui() {
             >
                 万能按钮(模拟各种操作)
             </Button>
-            <div style={{minHeight: '200px'}}>
+            <div style={{minHeight: '200px', maxWidth: '300px'}}>
                 <List
                     header={<div style={{fontWeight: 600}}>步骤{currentStepId}：进行中的行为{currentSubTaskId}</div>}
                     // footer={<div>Footer</div>}
@@ -102,7 +103,7 @@ function Gui() {
 
             <div style={{color: "green"}}>请操作：{hint}</div>
             <h3>历史记录(用于跳步)</h3>
-            <div>
+            <div style={{maxWidth: "300px"}}>
                 {
                     // Object.values(step).map((item) => {
                     Object.keys(step).map((itemF) => {
@@ -124,12 +125,12 @@ function Gui() {
                         // })
                         return (
                             <div key={itemF}>
-                                <span>步骤{itemF}</span>
                                 <ul
                                     style={{
                                         padding: '2px 8px',
                                         margin: '0',
-                                        background: stepsStatus == StepsStatus.Running ? 'white' : "transparent"
+                                        background: stepsStatus == StepsStatus.Running ? 'white' : "transparent",
+                                        border: '1px solid red'
                                     }}
                                     onClick={() => {
                                         // 跳步逻辑.
@@ -161,18 +162,45 @@ function Gui() {
                                             });
                                             return events.flat();
                                         }).flat();
+                                        // 根据事件获取所有命令.
+                                        // 过滤与场景有关的命令.
+                                        const movies = events.map((item) => {
+                                            return EventMapMovie[item]
+                                        }).flat().filter((item) => [
+                                            MovieType.MOVE,
+                                            MovieType.MODEL_ANIMATION,
+                                        ].includes(item.movieType));
                                         console.log('所有事件');
                                         console.log(events);
-                                        // 根据事件获取所有命令.
-
-                                        // 过滤与场景有关的命令.
-
+                                        console.log('==所有影视==');
+                                        console.log(movies);
                                         // N个数组用来描述状态.
                                         // 两个维度(物品,状态).
                                         //    - 以变形为核心.
+                                        const moviesTransform = Object.values(movies.filter((item) => item.movieType == MovieType.MOVE).reduce((acc, item) => {
+                                                // 使用最后出现的记录覆盖前面的.
+                                                acc[item.parameters.name] = item;
+                                                return acc;
+                                            }, {})
+                                        );
+                                        // console.log('==唯一值==');
+                                        // console.log(moviesTransform)
                                         //    - 以动画为核心.
+                                        const moviesAnimation = Object.values(movies.filter((item) => item.movieType == MovieType.MODEL_ANIMATION).reduce((acc, item) => {
+                                                // 使用最后出现的记录覆盖前面的.
+                                                acc[item.parameters.name] = item;
+                                                return acc;
+                                            }, {})
+                                        );
                                         // 经过渲染层还原场景.
-
+                                        const result = [...moviesTransform, ...moviesAnimation];
+                                        // console.log('==result==')
+                                        // 渲染结果层.
+                                        // console.log(result);
+                                        // play(movieActive);
+                                        result.forEach((item) => {
+                                            movieActive(item);
+                                        });
                                     }}
                                 >
                                     {

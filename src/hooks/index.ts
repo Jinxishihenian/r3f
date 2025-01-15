@@ -150,6 +150,6 @@ const useMovie = () => {
         }
     }
 
-    return {play, restore};
+    return {play, restore,movieActive};
 }
 export default useMovie;

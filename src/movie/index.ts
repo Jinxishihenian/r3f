@@ -274,7 +274,7 @@ const EventMapMovie = {
                 timestamp: "",
                 sceneState: {
                     objectStates: {
-                        position: [-1.5, 0.7, 1],
+                        position: [0, 1, 1],
                         rotation: [],
                     }
                 },
@@ -315,12 +315,27 @@ const EventMapMovie = {
 
     [ActionMap.HSB_SQ]: [],
     [ActionMap.SYB_DJ3]: [],
-    [ActionMap.SYB_TZ]: [
-
-    ],
+    [ActionMap.SYB_TZ]: [],
     [ActionMap.AN_QR13]: [],
     [ActionMap.LZZ_CK4]: [],
     [ActionMap.AN_QR14]: [],
+    [ActionMap.RY_DJ]: [],
 };
+
+// 需要处理数组.
+const demos = [
+    {name: '床', d: "移动12米"},
+    {name: '被子', d: "移动5米"},
+    {name: '床', d: "移动1米"},
+    {name: '桌子', d: "移动1米"},
+    {name: '床', d: "移动2米"},
+    {name: '被子', d: "移动15米"},
+];
+// 结果数组.
+const demo = [
+    {name: '桌子', d: "移动1米"},
+    {name: '床', d: "移动2米"},
+    {name: '被子', d: "移动15米"},
+];
 
 export {EventMapMovie, MovieType}
