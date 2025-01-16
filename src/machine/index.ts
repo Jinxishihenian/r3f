@@ -227,6 +227,7 @@ const machine = setup({
                 // 手中是否有物品.
                 // 物品名称.
                 collectName: "",
+                // 人物位置.
             },
             // position: {},
             // angle: {},
@@ -342,12 +343,17 @@ const machine = setup({
                             // console.log('===测试===');
                             // console.log(context)
                             // console.log(event)
-                            return true;
+                            // return true;
                         },
                         player: ({context, event}) => {
                             // console.log('===测试===');
                             // console.log(context)
                             // console.log(event)
+                            // const {player} = context;
+                            // 理论上来说不该在这处理
+                            // if (player.hand.collectName == event.payload) {
+                            //
+                            // }
                             return {
                                 hand: {
                                     // 手中是否有物品.

@@ -91,7 +91,7 @@ function GLBModel({url, animationName, playOnce, click, name, ...props}) {
         //     // }}
         //     onClick={click}
         // >
-        <primitive {...props} object={scene}/>
+        <primitive {...props} onClick={click} object={scene}/>
         // </group>
     );
     // return ;

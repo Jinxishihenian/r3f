@@ -22,7 +22,7 @@ let lock = false;
 function Nursing() {
     const globalActorRef = GlobalMachineContext.useActorRef();
     const cameraControlRef = useRef<CameraControls | null>(null);
-    const draggable = GlobalMachineContext.useSelector((state) => state?.context?.draggable);
+    const {draggable, player} = GlobalMachineContext.useSelector((state) => state?.context);
     // const bears = useBearStore((state) => state.bears);
     // const increasePopulation = useBearStore((state) => state.increasePopulation)
     // const models = useBearStore((state) => state.models);
@@ -98,6 +98,19 @@ function Nursing() {
         });
     }, []);
 
+    const collect = (name) => {
+        console.log('点击物品');
+        console.log(name)
+        // player
+        // 清空手中物品.
+        if (player.hand.collectName == name) {
+            globalActorRef.send({type: 'START_DRAG', payload: ""});
+        } else {
+            // 拾取点击物品.
+            globalActorRef.send({type: 'START_DRAG', payload: name});
+        }
+    }
+
 
     // useEffect(() => {
     //
@@ -134,10 +147,17 @@ function Nursing() {
                 {/*>*/}
                 <group
                     onClick={(e) => {
-                        // e.d
                         e.stopPropagation();
-                        // console.log(e.object);
-
+                        console.log('====点击内容====');
+                        console.log(e.object.name);
+                        Object.values(Goods).forEach((item) => {
+                            const {name, id} = item;
+                            if (e.object.name == id) {
+                                // console.log('==名称==');
+                                // console.log(name)
+                                collect(name);
+                            }
+                        });
                     }}
                 >
                     <GLBModel url="/bf.glb" position={[-6, 0, 0]}/>
@@ -168,33 +188,40 @@ function Nursing() {
                         rotation={[0, Math.PI, 0]}
                         // name="输液泵"
                         name={Goods.SYB_JT.name}
+                        click={(e) => {
+                            // globalActorRef.send({type: 'START_DRAG', payload: e.object.name});
+                            // console.log(`点击内容${Goods.SYB_JT.name}`);
+                            // globalActorRef.send({type: 'START_DRAG', payload: Goods.SYB_JT.name});
+
+                        }}
                     />
                     {/*</Draggable>*/}
                     {/*棉签*/}
                     <GLBModel
                         url="/HL_YiYongMianQianBaoZhuang.glb"
                         position={[1.2, 0.62, 0.8779830113159199]}
+                        name={Goods.YYMQ.name}
                         // position={[-6, 0, 0]}
                         click={() => {
                             eventManager.emit("clickObjectA-2", "clickObjectA-2");
                         }}
                     />
                     {/*护士表*/}
-                    <Draggable>
-                        <GLBModel
-                            url="/HL_SM_HuShiBiao.glb"
-                            position={[1.2, 0.62, 0.7]}
-                            click={() => {
-                                eventManager.emit("clickObjectA-1", "clickObjectA-1");
-                            }}
-                            // position={[-6, 0, 0]}
-                        />
-                    </Draggable>
-
+                    {/*<Draggable>*/}
+                    <GLBModel
+                        url="/HL_SM_HuShiBiao.glb"
+                        position={[1.2, 0.62, 0.7]}
+                        click={() => {
+                            eventManager.emit("clickObjectA-1", "clickObjectA-1");
+                        }}
+                        // position={[-6, 0, 0]}
+                    />
+                    {/*</Draggable>*/}
                     {/*吉尔碘*/}
                     <GLBModel
                         url="/HL_JiErDianXiaoDuYe.glb"
                         position={[1.3, 0.64, 0.8779830113159199]}
+                        name={Goods.DF.name}
                         click={(e) => {
                             // console.log(e);
                             // console.log(e.object.name);
@@ -263,11 +290,11 @@ function Nursing() {
                 </group>
                 {/*HDR */}
                 <Environment files={'/qwantani_dusk_2_1k.hdr'}/>
-                <MouseFollowerLayout/>
+                {/*拿取物品的悬浮层*/}
+                {
+                    player.hand.collectName != "" && <MouseFollowerLayout/>
+                }
             </Canvas>
-            {/*物品拾取层*/}
-            {/*<MouseFollower/>*/}
-
         </div>
     );
 }

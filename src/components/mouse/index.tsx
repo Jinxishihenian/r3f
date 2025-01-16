@@ -3,9 +3,17 @@ import ReactDOM from "react-dom";
 import viteLogo from '/vite.svg'
 import SYB from '/syb.png'
 import SYB2 from '/syb2.png'
+import {GlobalMachineContext} from "../../machine";
 
 const MouseFollower = () => {
     const [position, setPosition] = useState({x: 0, y: 0});
+    const player = GlobalMachineContext.useSelector((state) => state?.context?.player);
+    // console.log()
+    useEffect(() => {
+        console.log('player');
+        console.log(player);
+    }, [player.hand.collectName]);
+
     useEffect(() => {
         const handleMouseMove = (e) => {
             setPosition({x: e.clientX, y: e.clientY});
