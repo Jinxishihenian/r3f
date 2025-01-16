@@ -15,6 +15,7 @@ import useMovie from "../../hooks";
 import Goods from "../../const/goods.ts";
 import MouseFollower from "../../components/mouse";
 import MouseFollowerLayout from "../../components/mouse/index2.tsx";
+import TestTAP from "../../demo/test.tsx";
 
 
 let lock = false;
@@ -288,6 +289,16 @@ function Nursing() {
                         // position={[-6, 0, 0]}
                     />
                 </group>
+                <TestTAP/>
+                {/*TestTAP*/}
+                {/*<mesh position={[-1.2, 0, 0]}>*/}
+                {/*    <boxGeometry args={[1, 1, 1]}/>*/}
+                {/*    <meshStandardMaterial color={"red"}/>*/}
+                {/*</mesh>*/}
+                {/*<mesh position={[1.2, 0, 0]}>*/}
+                {/*    <boxGeometry args={[1, 1, 1]}/>*/}
+                {/*    <meshStandardMaterial color={"blue"}/>*/}
+                {/*</mesh>*/}
                 {/*HDR */}
                 <Environment files={'/qwantani_dusk_2_1k.hdr'}/>
                 {/*拿取物品的悬浮层*/}

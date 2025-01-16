@@ -2,6 +2,7 @@ const Goods = {
     SYB_JT: {
         // 别名.
         name: "输液泵_静态",
+        // 模型中真实的名称.
         id: 'HL_ShuYeBeng_1',
     },
     SYB_DH: {
