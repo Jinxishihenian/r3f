@@ -16,6 +16,7 @@ import Goods from "../../const/goods.ts";
 import MouseFollower from "../../components/mouse";
 import MouseFollowerLayout from "../../components/mouse/index2.tsx";
 import TestTAP from "../../demo/test.tsx";
+import Box from "../../demo/spring.tsx";
 
 
 let lock = false;
@@ -289,7 +290,8 @@ function Nursing() {
                         // position={[-6, 0, 0]}
                     />
                 </group>
-                <TestTAP/>
+                {/*<TestTAP/>*/}
+                <Box/>
                 {/*TestTAP*/}
                 {/*<mesh position={[-1.2, 0, 0]}>*/}
                 {/*    <boxGeometry args={[1, 1, 1]}/>*/}
