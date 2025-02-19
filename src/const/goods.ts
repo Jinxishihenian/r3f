@@ -28,7 +28,10 @@ const Goods = {
     YYMQ: {
         name: "医用棉签",
         id: 'HL_YiYongMianQianBaoZhuang',
-    }
+    },
+    SYB: {
+        name: "输液板",
+    },
     // HL_YiYongMianQianBaoZhuang
 };
 // 模型真实名称.

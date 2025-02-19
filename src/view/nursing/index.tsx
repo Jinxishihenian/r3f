@@ -289,9 +289,29 @@ function Nursing() {
 
                         // position={[-6, 0, 0]}
                     />
+                    <GLBModel
+                        url="/HL_ShuYeDan_ShuYeBeng.glb"
+                        position={[0.77, 0.6, 0.8]}
+                        rotation={[0, -Math.PI / 2, 0]}
+                        name={Goods.SYB.name}
+                        // position={[-6, 0, 0]}
+                        click={(e) => {
+                            // console.log(e);
+                            // console.log(e.object.name);
+                            // console.log('模拟执行');
+                            // eventManager.emit(ActionMap.AN_QR7);
+                            // eventManager.emit(ActionMap.AN_DH);
+                            // 阻止冒泡.
+
+                            // eventManager.emit("confirmAction");
+                            // eventManager.emit("clickObjectB", "clickObjectB");
+                            // eventManager.emit("clickObjectA", "clickObjectA");
+                            // e.stopPropagation();
+                        }}
+                    />
                 </group>
-                {/*<TestTAP/>*/}
-                <Box/>
+                <TestTAP/>
+                {/*<Box/>*/}
                 {/*TestTAP*/}
                 {/*<mesh position={[-1.2, 0, 0]}>*/}
                 {/*    <boxGeometry args={[1, 1, 1]}/>*/}
